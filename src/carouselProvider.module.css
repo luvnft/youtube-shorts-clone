@@ -1,0 +1,32 @@
+.container {
+  margin: 0 auto;
+  position: relative;
+  transform: translateY(0);
+  height: 100vh; 
+  scroll-snap-type: y mandatory; /* height CAN'T USE PERCENT */
+  overflow: auto;
+}
+
+.itemContainer {
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+}
+
+.itemContainer img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.container::-webkit-scrollbar {
+  width: 0em;
+}
+
+.container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.container::-webkit-scrollbar-thumb {
+  background: transparent;
+}

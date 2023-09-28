@@ -1,5 +1,10 @@
 html,
-body {
+body,
+#root {
   margin: 0;
   height: 100%;
+}
+
+:root[debug] * {
+  border: 1px solid red;
 }
