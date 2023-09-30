@@ -13,13 +13,7 @@ const ShortVideoControl = () => {
   const percentage =
     currentTime === 0 || duration === 0 ? 0 : (currentTime / duration) * 100;
 
-  const toggleVideo = () => {
-    if (isPaused) {
-      dispatch({ type: "PLAY" });
-    } else {
-      dispatch({ type: "PAUSE" });
-    }
-  };
+
 
   const handleUpdatePercentage = (percentage: number) => {
     dispatch({
@@ -29,7 +23,7 @@ const ShortVideoControl = () => {
   };
 
   return (
-    <div className={styles.controlPanel} onClick={toggleVideo}>
+    <>
       {isPaused && <div className={styles.playIcon}>{playIcon}</div>}
       <div className={styles.progressBar}>
         <ProgressBar
@@ -37,7 +31,7 @@ const ShortVideoControl = () => {
           onPercentageChange={handleUpdatePercentage}
         />
       </div>
-    </div>
+    </>
   );
 };
 

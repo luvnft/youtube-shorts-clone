@@ -9,7 +9,7 @@ import {
 const ShortVideo = (props: HTMLProps<HTMLVideoElement>) => {
   const ref = useRef<HTMLVideoElement>(null);
   const dispatch = useContext(ShortVideoDispatchContext);
-  const { isPaused, jumpToTime, isDragging } = useContext(ShortVideoContext);
+  const { jumpToTime, isDragging } = useContext(ShortVideoContext);
   const { src } = props;
 
   useEffect(() => {
@@ -31,17 +31,6 @@ const ShortVideo = (props: HTMLProps<HTMLVideoElement>) => {
     //   }
     // };
   }, [src, dispatch]);
-
-  useEffect(() => {
-    if (ref.current) {
-      const video = ref.current as HTMLVideoElement;
-      if (isPaused) {
-        video.pause();
-      } else {
-        video.play();
-      }
-    }
-  }, [isPaused]);
 
   useEffect(() => {
     if (jumpToTime !== null) {
@@ -76,6 +65,17 @@ const ShortVideo = (props: HTMLProps<HTMLVideoElement>) => {
     });
   };
 
+  const toggleVideo = () => {
+    const video = ref.current as HTMLVideoElement;
+    if (video.paused) {
+      dispatch({ type: "PLAY" });
+      video.play();
+    } else {
+      dispatch({ type: "PAUSE" });
+      video.pause();
+    }
+  };
+
   return (
     <video
       {...props}
@@ -85,6 +85,7 @@ const ShortVideo = (props: HTMLProps<HTMLVideoElement>) => {
       ref={ref}
       onTimeUpdate={handleTimeUpdate}
       onDurationChange={handleDurationChange}
+      onClick={toggleVideo}
     />
   );
 };
