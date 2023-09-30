@@ -8,3 +8,19 @@ body,
 :root[debug] * {
   border: 1px solid red;
 }
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+button {
+ padding: 0 1rem;
+ background-color: #fff;
+ color: #212121;
+ border: none;
+ border-radius: 18px;
+ font-size: 14px;
+ line-height: 36px;
+ font-weight: 500;
+}
+

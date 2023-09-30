@@ -1,5 +1,7 @@
 import "./App.css";
+import CarouselItem from "./CarouselItem";
 import CarouselProvider from "./CarouselProvider";
+import ShortVideo from "./ShortVideo";
 
 function App() {
   return (
@@ -11,23 +13,13 @@ function App() {
       <main>
         <CarouselProvider>
           <CarouselItem>
-            <Short.Provider>
-              <div>
-                <div>
-                  <button type="button">like</button>
-                  <button type="button">comment</button>
-                </div>
-                <div>
-                  <div>short name</div>
-                  <div>user name</div>
-                </div>
-              </div>
-              <div>
-                <ProgressBar />
-              </div>
-            </Short.Provider>
+            <img src="https://placehold.co/1440x2560/888/000" />
+          </CarouselItem>
+          <CarouselItem>
+            <img src="https://placehold.co/1440x2560/888/f00" />
           </CarouselItem>
         </CarouselProvider>
+        <ShortVideo />
       </main>
       <footer></footer>
     </>

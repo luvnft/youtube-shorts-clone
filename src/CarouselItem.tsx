@@ -1,14 +1,10 @@
-import { useContext } from "react";
+import { PropsWithChildren, useContext } from "react";
 import { Carousel } from "./CarouselProvider";
 
-const CarouselItem = ({ color }: { color: string }) => {
+const CarouselItem = ({ children }: PropsWithChildren) => {
   const context = useContext(Carousel);
 
-  return (
-    <div className={context}>
-      <img src={`https://placehold.co/1440x2560/000/${color}`} alt="item" />
-    </div>
-  );
+  return <div className={context}>{children}</div>;
 };
 
 export default CarouselItem;

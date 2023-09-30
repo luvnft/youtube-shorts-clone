@@ -4,7 +4,8 @@
   transform: translateY(0);
   height: 100vh; 
   scroll-snap-type: y mandatory; /* height CAN'T USE PERCENT */
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .itemContainer {

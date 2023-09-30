@@ -10,13 +10,22 @@ import Hammer from "hammerjs";
 
 export const Carousel = createContext<string>("");
 
+type CarouselItem<T> = {
+  id: string;
+  top: number;
+  left: number;
+  content: T;
+};
+
+// TODO: 上下切換影片 scroll to
+
 const CarouselProvider = ({ children }: PropsWithChildren) => {
   const ref = useRef(null);
   const [debug, setDebug] = useState("");
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
+  // const [items, setItems] = useState<CarouselItem<string>[]>([]);
 
   const handleSwipeUp = () => {
-    // current index + 1
     setCurrentItemIndex((prev) => {
       // MODIFY TO ITEMS LENGTH
       if (prev + 1 >= 2) {
@@ -29,7 +38,6 @@ const CarouselProvider = ({ children }: PropsWithChildren) => {
   };
 
   const handleSwipeDown = () => {
-    // current index - 1
     setCurrentItemIndex((prev) => {
       // MODIFY TO ITEMS LENGTH
       if (prev - 1 < 0) {

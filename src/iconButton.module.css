@@ -1,0 +1,28 @@
+.container {
+  text-align: center;
+  display: block;
+  color: #fff;
+}
+
+.icon {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: currentColor;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  line-height: 4rem;
+  text-align: center;
+  padding: 0;
+}
+
+.icon svg {
+  width: 1.5rem;
+}
+
+.iconTitle {
+  color: currentColor;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  margin-top: 4px;
+}
