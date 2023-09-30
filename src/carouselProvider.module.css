@@ -2,7 +2,7 @@
   margin: 0 auto;
   position: relative;
   transform: translateY(0);
-  height: 100vh; 
+  height: 100vh;
   scroll-snap-type: y mandatory; /* height CAN'T USE PERCENT */
   overflow-y: auto;
   overflow-x: hidden;
@@ -14,7 +14,8 @@
   scroll-snap-align: start;
 }
 
-.itemContainer img {
+.itemContainer img,
+.itemContainer video {
   width: 100%;
   height: 100%;
   object-fit: cover;

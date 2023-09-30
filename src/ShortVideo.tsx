@@ -1,43 +1,91 @@
-import { comment, moreInfo, share, thumbDown, thumbUp } from "./Icon";
-import IconButton from "./IconButton";
-import styles from "./short.module.css";
+import { HTMLProps, useContext, useEffect, useRef } from "react";
+import Hls from "hls.js";
+import {
+  ShortVideoContext,
+  ShortVideoDispatchContext,
+} from "./ShortVideoProvider";
 
-const ShortVideo = () => {
+// TODO: 判斷只有 html video element 的 props 才傳給他
+const ShortVideo = (props: HTMLProps<HTMLVideoElement>) => {
+  const ref = useRef<HTMLVideoElement>(null);
+  const dispatch = useContext(ShortVideoDispatchContext);
+  const { isPaused, jumpToTime, isDragging } = useContext(ShortVideoContext);
+  const { src } = props;
+
+  useEffect(() => {
+    if (ref.current && src) {
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(src);
+        hls.attachMedia(ref.current);
+      } else if (ref.current.canPlayType("application/vnd.apple.mpegurl")) {
+        ref.current.src = src;
+      }
+    }
+    // return () => {
+    //   if (videoElement) {
+    //     videoElement.pause();
+    //     videoElement.removeAttribute('src');
+    //     hls.detachMedia();
+    //     hls.destroy();
+    //   }
+    // };
+  }, [src, dispatch]);
+
+  useEffect(() => {
+    if (ref.current) {
+      const video = ref.current as HTMLVideoElement;
+      if (isPaused) {
+        video.pause();
+      } else {
+        video.play();
+      }
+    }
+  }, [isPaused]);
+
+  useEffect(() => {
+    if (jumpToTime !== null) {
+      if (ref.current) {
+        const video = ref.current as HTMLVideoElement;
+        video.currentTime = jumpToTime;
+        dispatch({ type: "RESET_JUMP_TIME" });
+      }
+    }
+  }, [jumpToTime, dispatch]);
+
+  const handleTimeUpdate = () => {
+    if (!isDragging) {
+      const video = ref.current as HTMLVideoElement;
+      dispatch({
+        type: "RECORD",
+        payload: {
+          currentTime: video.currentTime,
+        },
+      });
+    }
+  };
+
+  const handleDurationChange = () => {
+    const video = ref.current as HTMLVideoElement;
+    dispatch({
+      type: "INIT",
+      payload: {
+        currentTime: video.currentTime,
+        duration: video.duration,
+      },
+    });
+  };
+
   return (
-    <div>
-      <div className={styles.front}>
-        <div className={styles.info}>
-          <div>
-            <div>測試超長文字</div>
-            <div className={styles.profile}>
-              <div className={styles.profileIcon}>
-                <img src="https://placehold.co/24x24" alt="" />
-              </div>
-              <div>@user-xx-asdqwf</div>
-              <button type="button">訂閱</button>
-            </div>
-          </div>
-          <div className={styles.profileActions}>
-            <IconButton icon={thumbUp}>880</IconButton>
-            <IconButton icon={thumbDown}>不喜歡</IconButton>
-            <IconButton icon={comment}>10</IconButton>
-            <IconButton icon={share}>分享</IconButton>
-            <IconButton icon={moreInfo} />
-            <button type="button" className={styles.pivotButton}>
-              <img src="https://placehold.co/36x36/000/F00" alt="pivot-image" />
-            </button>
-          </div>
-        </div>
-        <div>
-          <div className={styles["progress-container"]}>
-            <div className={styles["progress-bar"]}>
-              <div className={styles["progress-inner-bar"]}></div>
-            </div>
-            <div className={styles["progress-bar-point"]}></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <video
+      {...props}
+      playsInline
+      muted
+      loop
+      ref={ref}
+      onTimeUpdate={handleTimeUpdate}
+      onDurationChange={handleDurationChange}
+    />
   );
 };
 

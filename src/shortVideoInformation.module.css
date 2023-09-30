@@ -1,0 +1,40 @@
+.front {
+  position: absolute;
+  bottom: 100px;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+  background-color: transparent;
+}
+
+.profile {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.profileIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.profileActions {
+}
+
+.pivotButton {
+  padding: 2px;
+  border-radius: 2px;
+  line-height: 0rem;
+  margin: auto;
+  margin: 0.5rem 0.25rem;
+}
+
+.info {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 0 0.5rem 0 1rem;
+  color: #fff;
+}

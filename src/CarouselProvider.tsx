@@ -61,6 +61,22 @@ const CarouselProvider = ({ children }: PropsWithChildren) => {
     };
   }, []);
 
+  // logic 要跟 carousel 脫鉤
+  useEffect(() => {
+    // 切換卡片要播放
+    if (ref.current) {
+      const container = ref.current as HTMLDivElement;
+      const videos = container.querySelectorAll("video");
+      // videos[currentItemIndex].muted = true;
+      // videos[currentItemIndex].play();
+    }
+    // 清除上張的狀態
+    // video.pause();
+    //     video.removeAttribute('src');
+    //     hls.detachMedia();
+    //     hls.destroy();
+  }, [currentItemIndex]);
+
   return (
     <Carousel.Provider value={styles.itemContainer}>
       <div
