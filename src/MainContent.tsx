@@ -28,13 +28,13 @@ const MainContent = () => {
             return (
               <CarouselItem key={i}>
                 <ShortVideoProvider>
-                  <ShortVideoControl />
                   <ShortVideo
                     index={i}
                     video={{ src: play_url }}
                     image={{ alt: title, src: cover }}
                   />
                   <ShortVideoInformation />
+                  <ShortVideoControl />
                 </ShortVideoProvider>
               </CarouselItem>
             );
@@ -46,13 +46,13 @@ const MainContent = () => {
             return (
               <CarouselItem key={i}>
                 <ShortVideoProvider>
-                  <ShortVideoControl />
                   <ShortVideo
                     index={i}
                     video={{ src: play_url }}
                     image={{ alt: title, src: cover }}
                   />
                   <ShortVideoInformation />
+                  <ShortVideoControl />
                 </ShortVideoProvider>
               </CarouselItem>
             );

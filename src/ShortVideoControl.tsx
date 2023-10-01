@@ -13,8 +13,6 @@ const ShortVideoControl = () => {
   const percentage =
     currentTime === 0 || duration === 0 ? 0 : (currentTime / duration) * 100;
 
-
-
   const handleUpdatePercentage = (percentage: number) => {
     dispatch({
       type: "JUMP_TO",

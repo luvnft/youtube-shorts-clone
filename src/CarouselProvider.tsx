@@ -50,7 +50,6 @@ const CarouselProvider = ({
   );
   const { top = 0, left = 0 } = items[currentItemIndex] ?? {};
   const maxLength = items.length;
-  console.log(maxLength);
 
   useEffect(() => {
     const handleSwipeUp = () => {
@@ -101,7 +100,17 @@ const CarouselProvider = ({
         items,
       }}
     >
-      <div className={styles.container} ref={ref}>
+      <div
+        className={styles.container}
+        ref={ref}
+        style={{
+          height:
+            // TODO: 改成判斷 useragent
+            window.innerWidth <= 768
+              ? window.innerHeight || document.documentElement.clientHeight
+              : "100vh",
+        }}
+      >
         {children}
       </div>
     </CarouselState.Provider>

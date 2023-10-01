@@ -65,19 +65,19 @@ const ProgressBar = ({
 
   return (
     <div
-      className={styles["progress-container"]}
+      className={styles.progressContainer}
       ref={ref}
       onMouseUp={onRelease}
       onTouchEnd={onRelease}
     >
-      <div className={styles["progress-bar"]}>
+      <div className={styles.progressBar}>
         <div
-          className={styles["progress-inner-bar"]}
+          className={styles.progressInnerBar}
           style={{ width: `${percentage}%` }}
         ></div>
       </div>
       <div
-        className={styles["progress-bar-point"]}
+        className={styles.progressBarPoint}
         style={{ left: `${isDragging ? currentProgress : percentage}%` }}
       ></div>
     </div>
