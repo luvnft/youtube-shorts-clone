@@ -1,12 +1,15 @@
 import {
   PropsWithChildren,
   createContext,
+  useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
 import styles from "./carouselProvider.module.css";
 import Hammer from "hammerjs";
+import { UserConfigContext, UserConfigDispatch } from "./UserConfigProvider";
+import { TabContext } from "./TabProvider";
 
 type CarouselState = {
   currentItemIndex: number;
@@ -39,19 +42,24 @@ const CarouselProvider = ({
   onSlideChange,
 }: PropsWithChildren & CarouselProviderProps) => {
   const ref = useRef(null);
-  const [currentItemIndex, setCurrentItemIndex] = useState(0);
-  const { top, left } = items[currentItemIndex];
+  const userConfig = useContext(UserConfigContext);
+  const userConfigDispatch = useContext(UserConfigDispatch);
+  const { id: tabId } = useContext(TabContext);
+  const [currentItemIndex, setCurrentItemIndex] = useState(
+    userConfig[tabId]?.index ?? 0
+  );
+  const { top = 0, left = 0 } = items[currentItemIndex] ?? {};
   const maxLength = items.length;
-
-  const handleSwipeUp = () => {
-    setCurrentItemIndex((prev) => (prev + 1 >= maxLength ? prev : prev + 1));
-  };
-
-  const handleSwipeDown = () => {
-    setCurrentItemIndex((prev) => (prev - 1 < 0 ? 0 : prev - 1));
-  };
+  console.log(maxLength);
 
   useEffect(() => {
+    const handleSwipeUp = () => {
+      setCurrentItemIndex((prev) => (prev + 1 >= maxLength ? prev : prev + 1));
+    };
+
+    const handleSwipeDown = () => {
+      setCurrentItemIndex((prev) => (prev - 1 < 0 ? 0 : prev - 1));
+    };
     const mc = new Hammer(ref.current ?? document.body);
     mc.get("swipe").set({ direction: Hammer.DIRECTION_ALL });
     mc.on("swipeup", handleSwipeUp);
@@ -60,13 +68,20 @@ const CarouselProvider = ({
     return () => {
       mc.destroy();
     };
-  }, []);
+  }, [tabId, maxLength]);
 
   useEffect(() => {
     if (onSlideChange) {
       onSlideChange(currentItemIndex);
     }
-  }, [currentItemIndex, onSlideChange]);
+    userConfigDispatch({
+      type: "UPDATE_VIDEO_INDEX",
+      payload: {
+        tabId,
+        index: currentItemIndex,
+      },
+    });
+  }, [currentItemIndex, onSlideChange, tabId, userConfigDispatch]);
 
   useEffect(() => {
     if (ref.current) {

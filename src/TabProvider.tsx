@@ -1,8 +1,8 @@
 import { Dispatch, PropsWithChildren, createContext, useReducer } from "react";
 
 export enum Id {
-  "FOR_YOU",
-  "FOLLOWING",
+  "FOR_YOU" = "FOR_YOU",
+  "FOLLOWING" = "FOLLOWING",
 }
 
 type TabState = {

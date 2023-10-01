@@ -1,16 +1,15 @@
-import { HTMLProps, useContext } from "react";
-import { TabDispatch, Id as TabId } from "./TabProvider";
+import { HTMLProps, PropsWithChildren, useContext } from "react";
+import { TabContext, TabDispatch, Id as TabId } from "./TabProvider";
+import styles from "./tab.module.css";
 
 const Tab = ({
-  onClick,
   children,
   tabId,
-}: HTMLProps<HTMLButtonElement> & { tabId: TabId; onClick: () => void }) => {
+}: HTMLProps<HTMLButtonElement> & { tabId: TabId }) => {
   const dispatch = useContext(TabDispatch);
 
   const handleClick = () => {
     dispatch({ type: "UPDATE_TAB", payload: { id: tabId } });
-    onClick();
   };
 
   return (
@@ -21,3 +20,20 @@ const Tab = ({
 };
 
 export default Tab;
+
+export const TabContainer = ({ children }: PropsWithChildren) => {
+  const tabContext = useContext(TabContext);
+
+  return (
+    <div
+      className={styles.tabContainer}
+      style={{
+        transform: `translateX(${
+          tabContext.id === TabId.FOLLOWING ? "0%" : "-50%"
+        })`,
+      }}
+    >
+      {children}
+    </div>
+  );
+};
