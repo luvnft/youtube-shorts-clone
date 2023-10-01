@@ -18,7 +18,7 @@ type ShortVideoAction =
       };
     }
   | {
-      type: "RECORD";
+      type: "TIME_UPDATE";
       payload: {
         currentTime: number;
       };
@@ -48,7 +48,7 @@ const shortVideoReducer = (
   action: ShortVideoAction
 ): ShortVideoState => {
   switch (action.type) {
-    case "RECORD": {
+    case "TIME_UPDATE": {
       return {
         ...state,
         currentTime: action.payload.currentTime,
@@ -93,6 +93,7 @@ const shortVideoReducer = (
 
 const ShortVideoProvider = ({ children }: PropsWithChildren) => {
   const [state, dispatch] = useReducer(shortVideoReducer, DEFAULT_STATE);
+
   return (
     <ShortVideoContext.Provider value={state}>
       <ShortVideoDispatchContext.Provider value={dispatch}>

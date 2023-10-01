@@ -4,6 +4,9 @@
   left: 0;
   width: 100%;
   background-color: transparent;
+  visibility: none;
+  /* FIXME: 要調整架構 */
+  pointer-events: none;
 }
 
 .profile {
@@ -17,6 +20,7 @@
   height: 1.5rem;
   overflow: hidden;
   border-radius: 50%;
+  visibility: visible;
 }
 
 .profileActions {

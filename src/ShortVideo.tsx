@@ -70,7 +70,7 @@ const ShortVideo = ({
   const handleTimeUpdate = () => {
     const video = ref.current as HTMLVideoElement;
     dispatch({
-      type: "RECORD",
+      type: "TIME_UPDATE",
       payload: {
         currentTime: video.currentTime,
       },

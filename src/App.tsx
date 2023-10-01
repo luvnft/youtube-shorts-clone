@@ -6,6 +6,8 @@ import ShortVideoProvider from "./ShortVideoProvider";
 import ShortVideo from "./ShortVideo";
 import ShortVideoControl from "./ShortVideoControl";
 import { useState } from "react";
+import Tab from "./Tab";
+import TabProvider, { Id as TabId } from "./TabProvider";
 
 const list = [
   {
@@ -39,39 +41,44 @@ function App() {
       left: 0,
     };
   });
+
   return (
     <>
-      <header>
-        <img src="/vite.svg" alt="log" />
-        <button type="button" onClick={() => setDataset(list)}>
-          following
-        </button>
-        <button type="button" onClick={() => setDataset(list2)}>
-          for you
-        </button>
-      </header>
-      <nav></nav>
-      <main>
-        <CarouselProvider items={carouselItems}>
-          {dataset.map((item, i) => {
-            const { play_url, cover, title } = item;
-            return (
-              <CarouselItem key={i}>
-                <ShortVideoProvider>
-                  <ShortVideoInformation />
-                  <ShortVideo
-                    index={i}
-                    video={{ src: play_url }}
-                    image={{ alt: title, src: cover }}
-                  />
-                  <ShortVideoControl />
-                </ShortVideoProvider>
-              </CarouselItem>
-            );
-          })}
-        </CarouselProvider>
-      </main>
-      <footer></footer>
+      <ShortVideoProvider>
+        <TabProvider>
+          <header>
+            <img src="/vite.svg" alt="log" />
+            <Tab tabId={TabId.FOLLOWING} onClick={() => setDataset(list)}>
+              following
+            </Tab>
+            <Tab tabId={TabId.FOR_YOU} onClick={() => setDataset(list2)}>
+              for you
+            </Tab>
+          </header>
+          <nav></nav>
+          <main>
+            <CarouselProvider items={carouselItems}>
+              {dataset.map((item, i) => {
+                const { play_url, cover, title } = item;
+                return (
+                  <CarouselItem key={i}>
+                    <ShortVideoProvider>
+                      <ShortVideoControl />
+                      <ShortVideo
+                        index={i}
+                        video={{ src: play_url }}
+                        image={{ alt: title, src: cover }}
+                      />
+                      <ShortVideoInformation />
+                    </ShortVideoProvider>
+                  </CarouselItem>
+                );
+              })}
+            </CarouselProvider>
+          </main>
+        </TabProvider>
+        <footer></footer>
+      </ShortVideoProvider>
     </>
   );
 }
