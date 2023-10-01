@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.35.7",
     "hammerjs": "^2.0.8",
     "hls.js": "^1.4.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^4.34.1",
     "@types/hammerjs": "^2.0.42",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
