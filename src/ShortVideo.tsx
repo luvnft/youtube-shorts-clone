@@ -49,15 +49,15 @@ const ShortVideo = memo(
         }
       }
       return () => {
-        if (hls) {
-          hls.detachMedia();
-          hls.destroy();
-        }
         if (video) {
           dispatch({ type: "PAUSE" });
           video.pause();
           video.currentTime = 0;
         }
+        // if (hls) {
+        //   hls.detachMedia();
+        //   hls.destroy();
+        // }
       };
     }, [currentItemIndex, index, dispatch, videoSrc]);
 
@@ -96,10 +96,8 @@ const ShortVideo = memo(
     const toggleVideo = () => {
       const video = ref.current as HTMLVideoElement;
       if (video.paused) {
-        dispatch({ type: "PLAY" });
         video.play();
       } else {
-        dispatch({ type: "PAUSE" });
         video.pause();
       }
     };
@@ -107,6 +105,13 @@ const ShortVideo = memo(
     const handlePlaying = () => {
       setIsShowThumbnail(false);
       dispatch({ type: "PLAY" });
+    };
+
+    const handlePause = () => {
+      if (currentItemIndex !== index) {
+        setIsShowThumbnail(true);
+      }
+      dispatch({ type: "PAUSE" });
     };
 
     const toggleMuteButton = () => {
@@ -141,6 +146,7 @@ const ShortVideo = memo(
           onDurationChange={handleDurationChange}
           onClick={toggleVideo}
           onPlaying={handlePlaying}
+          onPause={handlePause}
         />
       </>
     );

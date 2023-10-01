@@ -10,6 +10,12 @@ const Tab = ({
 
   const handleClick = () => {
     dispatch({ type: "UPDATE_TAB", payload: { id: tabId } });
+    // TODO: workaround & 隔離 logic
+    document.querySelectorAll("video").forEach((video) => {
+      if (!(video as HTMLVideoElement).paused) {
+        (video as HTMLVideoElement).pause();
+      }
+    });
   };
 
   return (
@@ -26,6 +32,7 @@ export const TabContainer = ({ children }: PropsWithChildren) => {
 
   return (
     <div
+      id={tabContext.id}
       className={styles.tabContainer}
       style={{
         transform: `translateX(${
