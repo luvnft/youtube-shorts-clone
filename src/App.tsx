@@ -1,19 +1,9 @@
 import "./App.css";
-import CarouselItem from "./CarouselItem";
-import CarouselProvider from "./CarouselProvider";
-import ShortVideoInformation from "./ShortVideoInformation";
-import ShortVideoProvider from "./ShortVideoProvider";
-import ShortVideo from "./ShortVideo";
-import ShortVideoControl from "./ShortVideoControl";
-import Tab, { TabContainer } from "./Tab";
+import Tab from "./Tab";
 import TabProvider, { Id as TabId } from "./TabProvider";
 import UserConfigProvider from "./UserConfigProvider";
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from "@tanstack/react-query";
-import { fetchFollowingList, fetchForYouList, mapToCarouselType } from "./api";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import MainContent from "./MainContent";
 
 const queryClient = new QueryClient();
 
@@ -27,7 +17,7 @@ function App() {
             <Tab tabId={TabId.FOLLOWING}>following</Tab>
             <Tab tabId={TabId.FOR_YOU}>for you</Tab>
           </header>
-          <Main />
+          <MainContent />
           <nav></nav>
         </TabProvider>
         <footer></footer>
@@ -37,57 +27,3 @@ function App() {
 }
 
 export default App;
-
-const Main = () => {
-  const { data: followingList = [] } = useQuery({
-    queryKey: ["following"],
-    queryFn: fetchFollowingList,
-  });
-  const { data: forYouList = [] } = useQuery({
-    queryKey: ["forYou"],
-    queryFn: fetchForYouList,
-  });
-
-  return (
-    <main>
-      <TabContainer>
-        <CarouselProvider items={followingList.map(mapToCarouselType)}>
-          {followingList.map((item, i) => {
-            const { play_url, cover, title } = item;
-            return (
-              <CarouselItem key={i}>
-                <ShortVideoProvider>
-                  <ShortVideoControl />
-                  <ShortVideo
-                    index={i}
-                    video={{ src: play_url }}
-                    image={{ alt: title, src: cover }}
-                  />
-                  <ShortVideoInformation />
-                </ShortVideoProvider>
-              </CarouselItem>
-            );
-          })}
-        </CarouselProvider>
-        <CarouselProvider items={forYouList.map(mapToCarouselType)}>
-          {forYouList.map((item, i) => {
-            const { play_url, cover, title } = item;
-            return (
-              <CarouselItem key={i}>
-                <ShortVideoProvider>
-                  <ShortVideoControl />
-                  <ShortVideo
-                    index={i}
-                    video={{ src: play_url }}
-                    image={{ alt: title, src: cover }}
-                  />
-                  <ShortVideoInformation />
-                </ShortVideoProvider>
-              </CarouselItem>
-            );
-          })}
-        </CarouselProvider>
-      </TabContainer>
-    </main>
-  );
-};
