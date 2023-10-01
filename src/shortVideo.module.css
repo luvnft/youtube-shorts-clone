@@ -1,3 +1,10 @@
 .thumbnail {
   position: absolute;
 }
+
+.muteButton {
+  position: absolute;
+  top: 10%;
+  left: 1rem;
+  z-index: 100;
+}

@@ -28,6 +28,7 @@ const ShortVideo = memo(
     const { jumpToTime } = useContext(ShortVideoContext);
     const { currentItemIndex } = useContext(CarouselState);
     const { src: videoSrc } = videoProps;
+    const isShowMuteButton = ref.current?.muted ?? true;
 
     // bind hls
     useEffect(() => {
@@ -107,8 +108,23 @@ const ShortVideo = memo(
       setIsShowThumbnail(false);
       dispatch({ type: "PLAY" });
     };
+
+    const toggleMuteButton = () => {
+      const video = ref.current as HTMLVideoElement;
+      video.muted = !video.muted;
+    };
+
     return (
       <>
+        {isShowMuteButton && (
+          <button
+            type="button"
+            className={styles.muteButton}
+            onClick={toggleMuteButton}
+          >
+            取消靜音
+          </button>
+        )}
         <img
           {...imgProps}
           className={styles.thumbnail}
