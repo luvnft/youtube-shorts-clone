@@ -18,7 +18,7 @@ const ShortVideo = ({
   video: videoProps,
   image: imgProps,
 }: ShortVideoProps) => {
-  const [isReady, setIsReady] = useState(false);
+  const [isShowThumbnail, setIsShowThumbnail] = useState(true);
   const ref = useRef<HTMLVideoElement>(null);
   const dispatch = useContext(ShortVideoDispatchContext);
   const { jumpToTime } = useContext(ShortVideoContext);
@@ -28,26 +28,33 @@ const ShortVideo = ({
   // bind hls
   useEffect(() => {
     let hls: Hls | null = null;
-    const video: HTMLVideoElement | null = ref.current;
-    if (video && videoSrc) {
-      if (Hls.isSupported()) {
-        hls = new Hls();
-        hls.on(Hls.Events.MANIFEST_PARSED, function () {
-          setIsReady(true);
-        });
-        hls.loadSource(videoSrc);
-        hls.attachMedia(video);
-      } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-        video.src = videoSrc;
+    const video = ref.current as HTMLVideoElement;
+    if (currentItemIndex === index) {
+      if (video && videoSrc) {
+        if (Hls.isSupported()) {
+          hls = new Hls({
+            maxMaxBufferLength: 600,
+            maxBufferLength: 60,
+          });
+          hls.loadSource(videoSrc);
+          hls.attachMedia(video);
+        } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+          video.src = videoSrc;
+        }
       }
     }
-    // return () => {
-    //   if (hls) {
-    //     hls.detachMedia();
-    //     hls.destroy();
-    //   }
-    // };
-  }, [videoSrc, dispatch]);
+    return () => {
+      if (hls) {
+        hls.detachMedia();
+        hls.destroy();
+      }
+      if (video) {
+        dispatch({ type: "PAUSE" });
+        video.pause();
+        video.currentTime = 0;
+      }
+    };
+  }, [currentItemIndex, index, dispatch, videoSrc]);
 
   // drag progress bar to update the video progress
   useEffect(() => {
@@ -59,22 +66,6 @@ const ShortVideo = ({
       }
     }
   }, [jumpToTime, dispatch]);
-
-  useEffect(() => {
-    const video = ref.current as HTMLVideoElement;
-    if (currentItemIndex === index) {
-      if (isReady) {
-        video.play();
-        dispatch({ type: "PLAY" });
-      }
-    } else {
-      if (video) {
-        dispatch({ type: "PAUSE" });
-        video.pause();
-        video.currentTime = 0;
-      }
-    }
-  }, [isReady, currentItemIndex, index, dispatch]);
 
   const handleTimeUpdate = () => {
     const video = ref.current as HTMLVideoElement;
@@ -108,22 +99,24 @@ const ShortVideo = ({
     }
   };
 
+  const handlePlaying = () => {
+    setIsShowThumbnail(false);
+    dispatch({ type: "PLAY" });
+  };
   return (
     <>
-      <img
-        {...imgProps}
-        className={styles.thumbnail}
-        style={{ opacity: !isReady || currentItemIndex !== index ? 1 : 0 }}
-      />
+      {isShowThumbnail && <img {...imgProps} className={styles.thumbnail} />}
       <video
         {...videoProps}
         playsInline
         loop
         muted
+        autoPlay
         ref={ref}
         onTimeUpdate={handleTimeUpdate}
         onDurationChange={handleDurationChange}
         onClick={toggleVideo}
+        onPlaying={handlePlaying}
       />
     </>
   );

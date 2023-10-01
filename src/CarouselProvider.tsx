@@ -29,7 +29,6 @@ type CarouselItem = {
 };
 
 type CarouselProviderProps = {
-  maxLength: number;
   items: CarouselItem[];
   onSlideChange?: (slideIndex: number) => void;
 };
@@ -37,12 +36,12 @@ type CarouselProviderProps = {
 const CarouselProvider = ({
   children,
   items,
-  maxLength,
   onSlideChange,
 }: PropsWithChildren & CarouselProviderProps) => {
   const ref = useRef(null);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const { top, left } = items[currentItemIndex];
+  const maxLength = items.length;
 
   const handleSwipeUp = () => {
     setCurrentItemIndex((prev) => (prev + 1 >= maxLength ? prev : prev + 1));
