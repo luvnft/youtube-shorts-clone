@@ -8,46 +8,48 @@ import {
 import styles from "./carouselProvider.module.css";
 import Hammer from "hammerjs";
 
-export const Carousel = createContext<string>("");
+type CarouselState = {
+  currentItemIndex: number;
+  items: CarouselItem[];
+  itemClassName: string;
+};
 
-type CarouselItem<T> = {
+const DEFAULT_CONTEXT: CarouselState = {
+  currentItemIndex: 0,
+  items: [],
+  itemClassName: "",
+};
+
+export const CarouselState = createContext<CarouselState>(DEFAULT_CONTEXT);
+
+type CarouselItem = {
   id: string;
   top: number;
   left: number;
-  content: T;
 };
 
-// TODO: 上下切換影片 scroll to
+type CarouselProviderProps = {
+  maxLength: number;
+  items: CarouselItem[];
+  onSlideChange?: (slideIndex: number) => void;
+};
 
-const CarouselProvider = ({ children }: PropsWithChildren) => {
+const CarouselProvider = ({
+  children,
+  items,
+  maxLength,
+  onSlideChange,
+}: PropsWithChildren & CarouselProviderProps) => {
   const ref = useRef(null);
-  const [debug, setDebug] = useState("");
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
-  // const [items, setItems] = useState<CarouselItem<string>[]>([]);
+  const { top, left } = items[currentItemIndex];
 
   const handleSwipeUp = () => {
-    setCurrentItemIndex((prev) => {
-      // MODIFY TO ITEMS LENGTH
-      if (prev + 1 >= 2) {
-        return 2;
-      } else {
-        return prev + 1;
-      }
-    });
-    setDebug(" up  gesture detected.");
+    setCurrentItemIndex((prev) => (prev + 1 >= maxLength ? prev : prev + 1));
   };
 
   const handleSwipeDown = () => {
-    setCurrentItemIndex((prev) => {
-      // MODIFY TO ITEMS LENGTH
-      if (prev - 1 < 0) {
-        return 0;
-      } else {
-        return prev - 1;
-      }
-    });
-
-    setDebug(" down  gesture detected. ");
+    setCurrentItemIndex((prev) => (prev - 1 < 0 ? 0 : prev - 1));
   };
 
   useEffect(() => {
@@ -61,41 +63,34 @@ const CarouselProvider = ({ children }: PropsWithChildren) => {
     };
   }, []);
 
-  // logic 要跟 carousel 脫鉤
   useEffect(() => {
-    // 切換卡片要播放
-    if (ref.current) {
-      const container = ref.current as HTMLDivElement;
-      const videos = container.querySelectorAll("video");
-      // videos[currentItemIndex].muted = true;
-      // videos[currentItemIndex].play();
+    if (onSlideChange) {
+      onSlideChange(currentItemIndex);
     }
-    // 清除上張的狀態
-    // video.pause();
-    //     video.removeAttribute('src');
-    //     hls.detachMedia();
-    //     hls.destroy();
-  }, [currentItemIndex]);
+  }, [currentItemIndex, onSlideChange]);
+
+  useEffect(() => {
+    if (ref.current) {
+      (ref.current as HTMLElement).scrollTo({
+        top,
+        left,
+        behavior: "smooth",
+      });
+    }
+  }, [top, left]);
 
   return (
-    <Carousel.Provider value={styles.itemContainer}>
-      <div
-        style={{
-          position: "fixed",
-          background: "#fff",
-          color: "#000",
-          zIndex: 600,
-          right: 0,
-          top: 0,
-        }}
-      >
-        {debug}
-        currentIndex: {currentItemIndex}
-      </div>
+    <CarouselState.Provider
+      value={{
+        currentItemIndex,
+        itemClassName: styles.itemContainer,
+        items,
+      }}
+    >
       <div className={styles.container} ref={ref}>
         {children}
       </div>
-    </Carousel.Provider>
+    </CarouselState.Provider>
   );
 };
 

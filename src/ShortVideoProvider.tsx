@@ -5,7 +5,6 @@ type ShortVideoState = {
   jumpToTime: number | null;
   duration: number;
   isPaused: boolean;
-  isDragging: boolean;
 };
 
 type ShortVideoAction =
@@ -30,12 +29,6 @@ type ShortVideoAction =
         currentTime: number;
         duration: number;
       };
-    }
-  | {
-      type: "UPDATE_DRAGGING";
-      payload: {
-        isDragging: boolean;
-      };
     };
 
 const DEFAULT_STATE = {
@@ -43,7 +36,6 @@ const DEFAULT_STATE = {
   jumpToTime: null,
   duration: 0,
   isPaused: true,
-  isDragging: false,
 };
 
 export const ShortVideoContext = createContext<ShortVideoState>(DEFAULT_STATE);
@@ -92,9 +84,6 @@ const shortVideoReducer = (
         currentTime: action.payload.currentTime,
         duration: action.payload.duration,
       };
-    }
-    case "UPDATE_DRAGGING": {
-      return { ...state, isDragging: action.payload.isDragging };
     }
     default: {
       return state;
