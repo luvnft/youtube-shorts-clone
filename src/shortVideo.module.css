@@ -1,5 +1,6 @@
 .thumbnail {
   position: absolute;
+  pointer-events: none;
 }
 
 .muteButton {
