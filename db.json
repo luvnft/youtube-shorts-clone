@@ -5,6 +5,11 @@
         "title": "video1",
         "cover": "https://placehold.co/1440x2560/000/F00",
         "play_url": "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8"
+      },
+      {
+        "title": "video2",
+        "cover": "https://placehold.co/1440x2560/000/F00",
+        "play_url": "https://devstreaming-cdn.apple.com/videos/streaming/examples/adv_dv_atmos/main.m3u8"
       }
     ]
   },
@@ -14,6 +19,11 @@
         "title": "video2",
         "cover": "https://placehold.co/1440x2560/000/F00",
         "play_url": "https://devstreaming-cdn.apple.com/videos/streaming/examples/adv_dv_atmos/main.m3u8"
+      },
+      {
+        "title": "video1",
+        "cover": "https://placehold.co/1440x2560/000/F00",
+        "play_url": "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_4x3/bipbop_4x3_variant.m3u8"
       }
     ]
   }
