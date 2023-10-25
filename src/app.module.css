@@ -1,0 +1,38 @@
+:root {
+  --header-height: 60px;
+}
+
+html {
+  background-color: #232323;
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 600;
+  background-color: #1c1c1c;
+  width: 100%;
+  height: var(--header-height);
+  box-sizing: border-box;
+  display: flex;
+  justify-items: flex-start;
+  align-items: center;
+  gap: 1rem;
+  padding-left: 1rem;
+}
+
+.main {
+  height: 100%;
+  overflow: hidden;
+  margin: auto;
+}
+
+.aside {
+  position: fixed;
+  height: 100%;
+  top: var(--header-height);
+  left: 0;
+  z-index: 400;
+  background-color: #1c1c1c;
+}
