@@ -1,5 +1,5 @@
 import { Dispatch, PropsWithChildren, createContext, useReducer } from "react";
-import { Id as TabId } from "./TabProvider";
+import { Id as TabId } from "./tabAtoms";
 
 type VideoCache = {
   index: number;

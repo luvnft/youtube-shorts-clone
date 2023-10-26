@@ -9,7 +9,8 @@ import {
 import styles from "./carouselProvider.module.css";
 import Hammer from "hammerjs";
 import { UserConfigContext, UserConfigDispatch } from "./UserConfigProvider";
-import { TabContext } from "./TabProvider";
+import { tabAtom } from "./tabAtoms";
+import { useAtom } from "jotai";
 
 type CarouselState = {
   currentItemIndex: number;
@@ -44,7 +45,7 @@ const CarouselProvider = ({
   const ref = useRef(null);
   const userConfig = useContext(UserConfigContext);
   const userConfigDispatch = useContext(UserConfigDispatch);
-  const { id: tabId } = useContext(TabContext);
+  const [{ id: tabId }] = useAtom(tabAtom)
   const [currentItemIndex, setCurrentItemIndex] = useState(
     userConfig[tabId]?.index ?? 0
   );

@@ -1,12 +1,13 @@
-import { HTMLProps, PropsWithChildren, useContext } from "react";
-import { TabContext, TabDispatch, Id as TabId } from "./TabProvider";
+import { HTMLProps, PropsWithChildren } from "react";
+import { Id as TabId, tabAtom, tabDispatchAtom } from "./tabAtoms";
 import styles from "./tab.module.css";
+import { useAtomValue, useSetAtom } from "jotai";
 
 const Tab = ({
   children,
   tabId,
 }: HTMLProps<HTMLButtonElement> & { tabId: TabId }) => {
-  const dispatch = useContext(TabDispatch);
+  const dispatch = useSetAtom(tabDispatchAtom);
 
   const handleClick = () => {
     dispatch({ type: "UPDATE_TAB", payload: { id: tabId } });
@@ -28,16 +29,14 @@ const Tab = ({
 export default Tab;
 
 export const TabContainer = ({ children }: PropsWithChildren) => {
-  const tabContext = useContext(TabContext);
+  const tab = useAtomValue(tabAtom);
 
   return (
     <div
-      id={tabContext.id}
+      id={tab.id}
       className={styles.tabContainer}
       style={{
-        transform: `translateX(${
-          tabContext.id === TabId.FOLLOWING ? "0%" : "-50%"
-        })`,
+        transform: `translateX(${tab.id === TabId.FOLLOWING ? "0%" : "-50%"})`,
       }}
     >
       {children}
