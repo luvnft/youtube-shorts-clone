@@ -1,15 +1,12 @@
-import { useContext } from "react";
 import { playIcon } from "./Icon";
 import ProgressBar from "./ProgressBar";
 import styles from "./shortVideoControl.module.css";
-import {
-  ShortVideoContext,
-  ShortVideoDispatchContext,
-} from "./ShortVideoProvider";
+import { shortVideoAtom, shortVideoDispatchAtom } from "./shortVideoAtoms";
+import { useAtomValue, useSetAtom } from "jotai";
 
 const ShortVideoControl = () => {
-  const { currentTime, duration, isPaused } = useContext(ShortVideoContext);
-  const dispatch = useContext(ShortVideoDispatchContext);
+  const { currentTime, duration, isPaused } = useAtomValue(shortVideoAtom);
+  const dispatch = useSetAtom(shortVideoDispatchAtom);
   const percentage =
     currentTime === 0 || duration === 0 ? 0 : (currentTime / duration) * 100;
 

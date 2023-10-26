@@ -7,12 +7,10 @@ import {
   useState,
 } from "react";
 import Hls from "hls.js";
-import {
-  ShortVideoContext,
-  ShortVideoDispatchContext,
-} from "./ShortVideoProvider";
 import { CarouselState } from "./CarouselProvider";
 import styles from "./shortVideo.module.css";
+import { useAtomValue, useSetAtom } from "jotai";
+import { shortVideoAtom, shortVideoDispatchAtom } from "./shortVideoAtoms";
 
 type ShortVideoProps = {
   index: number;
@@ -24,8 +22,8 @@ const ShortVideo = memo(
   ({ index, video: videoProps, image: imgProps }: ShortVideoProps) => {
     const [isShowThumbnail, setIsShowThumbnail] = useState(true);
     const ref = useRef<HTMLVideoElement>(null);
-    const dispatch = useContext(ShortVideoDispatchContext);
-    const { jumpToTime } = useContext(ShortVideoContext);
+    const dispatch = useSetAtom(shortVideoDispatchAtom);
+    const { jumpToTime } = useAtomValue(shortVideoAtom);
     const { currentItemIndex } = useContext(CarouselState);
     const { src: videoSrc } = videoProps;
     const isShowMuteButton = ref.current?.muted ?? true;

@@ -1,4 +1,4 @@
-import { Dispatch, PropsWithChildren, createContext, useReducer } from "react";
+import { atom } from "jotai";
 
 type ShortVideoState = {
   currentTime: number;
@@ -38,10 +38,13 @@ const DEFAULT_STATE = {
   isPaused: true,
 };
 
-export const ShortVideoContext = createContext<ShortVideoState>(DEFAULT_STATE);
-export const ShortVideoDispatchContext = createContext<
-  Dispatch<ShortVideoAction>
->(() => {});
+export const shortVideoAtom = atom<ShortVideoState>(DEFAULT_STATE);
+export const shortVideoDispatchAtom = atom(
+  null,
+  (get, set, action: ShortVideoAction) => {
+    set(shortVideoAtom, shortVideoReducer(get(shortVideoAtom), action));
+  }
+);
 
 const shortVideoReducer = (
   state: ShortVideoState,
@@ -90,17 +93,3 @@ const shortVideoReducer = (
     }
   }
 };
-
-const ShortVideoProvider = ({ children }: PropsWithChildren) => {
-  const [state, dispatch] = useReducer(shortVideoReducer, DEFAULT_STATE);
-
-  return (
-    <ShortVideoContext.Provider value={state}>
-      <ShortVideoDispatchContext.Provider value={dispatch}>
-        {children}
-      </ShortVideoDispatchContext.Provider>
-    </ShortVideoContext.Provider>
-  );
-};
-
-export default ShortVideoProvider;
