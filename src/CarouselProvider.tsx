@@ -1,16 +1,15 @@
 import {
   PropsWithChildren,
   createContext,
-  useContext,
   useEffect,
   useRef,
   useState,
 } from "react";
 import styles from "./carouselProvider.module.css";
 import Hammer from "hammerjs";
-import { UserConfigContext, UserConfigDispatch } from "./UserConfigProvider";
+import { userConfigAtom, userConfigDispatchAtom } from "./userConfigAtoms";
 import { tabAtom } from "./tabAtoms";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 
 type CarouselState = {
   currentItemIndex: number;
@@ -37,15 +36,19 @@ type CarouselProviderProps = {
   onSlideChange?: (slideIndex: number) => void;
 };
 
+// TODO useState 記錄 carouselId 的 useState 改成 atom
+// TODO 和 userConfig 的 index 整合 
+// TODO 拿掉同步 currentItemIndex 的 useEffect
+// TODO 等多出來 carouselAtom 再來改 CarouselProvider
 const CarouselProvider = ({
   children,
   items,
   onSlideChange,
 }: PropsWithChildren & CarouselProviderProps) => {
   const ref = useRef(null);
-  const userConfig = useContext(UserConfigContext);
-  const userConfigDispatch = useContext(UserConfigDispatch);
-  const [{ id: tabId }] = useAtom(tabAtom)
+  const userConfig = useAtomValue(userConfigAtom);
+  const userConfigDispatch = useSetAtom(userConfigDispatchAtom);
+  const [{ id: tabId }] = useAtom(tabAtom);
   const [currentItemIndex, setCurrentItemIndex] = useState(
     userConfig[tabId]?.index ?? 0
   );
@@ -77,7 +80,6 @@ const CarouselProvider = ({
     userConfigDispatch({
       type: "UPDATE_VIDEO_INDEX",
       payload: {
-        tabId,
         index: currentItemIndex,
       },
     });

@@ -1,5 +1,5 @@
-import { Dispatch, PropsWithChildren, createContext, useReducer } from "react";
-import { Id as TabId } from "./tabAtoms";
+import { Id as TabId, tabIdAtom } from "./tabAtoms";
+import { atom } from "jotai";
 
 type VideoCache = {
   index: number;
@@ -16,7 +16,6 @@ type UserConfigAction =
   | {
       type: "UPDATE_VIDEO_CACHE";
       payload: {
-        tabId: TabId;
         video: {
           index: number;
           currentTime: number;
@@ -27,23 +26,37 @@ type UserConfigAction =
   | {
       type: "UPDATE_VIDEO_INDEX";
       payload: {
-        tabId: TabId;
         index: number;
       };
     };
 
-export const UserConfigContext = createContext<UserConfig>({});
-export const UserConfigDispatch = createContext<Dispatch<UserConfigAction>>(
-  () => {}
+export const userConfigAtom = atom<UserConfig>({});
+export const userConfigDispatchAtom = atom(
+  null,
+  (get, set, action: UserConfigAction) => {
+    const tabId = get(tabIdAtom);
+    const useConfigState = get(userConfigAtom);
+
+    // reducer
+    set(
+      userConfigAtom,
+      userConfigReducer<typeof tabId>(useConfigState, action, tabId)
+    );
+  }
 );
 
-const userConfigReducer = (
+export function userConfigReducer<T>(
   state: UserConfig,
-  action: UserConfigAction
-): UserConfig => {
+  action: UserConfigAction,
+  context: T
+): UserConfig {
+  // 因為不想 import tabId，因此將 context 轉成 string 但看起來難以閱讀
+  // NIT: 應該改成 tabId？還是應該在arg 就限制tabid?
+  const tabId = context as string;
+
   switch (action.type) {
     case "UPDATE_VIDEO_CACHE": {
-      const { tabId, video } = action.payload;
+      const { video } = action.payload;
       const { index, ...videoProps } = video;
       return {
         ...state,
@@ -54,7 +67,7 @@ const userConfigReducer = (
       };
     }
     case "UPDATE_VIDEO_INDEX": {
-      const { tabId, index } = action.payload;
+      const { index } = action.payload;
       return {
         ...state,
         [tabId]: {
@@ -68,18 +81,4 @@ const userConfigReducer = (
       return state;
     }
   }
-};
-
-const UserConfigProvider = ({ children }: PropsWithChildren) => {
-  const [state, dispatch] = useReducer(userConfigReducer, {});
-
-  return (
-    <UserConfigContext.Provider value={state}>
-      <UserConfigDispatch.Provider value={dispatch}>
-        {children}
-      </UserConfigDispatch.Provider>
-    </UserConfigContext.Provider>
-  );
-};
-
-export default UserConfigProvider;
+}
