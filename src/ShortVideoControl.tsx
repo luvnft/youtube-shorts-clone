@@ -1,19 +1,17 @@
 import { playIcon } from "./Icon";
 import ProgressBar from "./ProgressBar";
 import styles from "./shortVideoControl.module.css";
-import { shortVideoAtom, shortVideoDispatchAtom } from "./shortVideoAtoms";
-import { useAtomValue, useSetAtom } from "jotai";
+import { shortVideoAtom, shortVideoProgressAtom } from "./shortVideoAtoms";
+import { useAtom, useAtomValue } from "jotai";
 
 const ShortVideoControl = () => {
-  const { currentTime, duration, isPaused } = useAtomValue(shortVideoAtom);
-  const dispatch = useSetAtom(shortVideoDispatchAtom);
-  const percentage =
-    currentTime === 0 || duration === 0 ? 0 : (currentTime / duration) * 100;
+  const { isPaused } = useAtomValue(shortVideoAtom);
+  const [{ percentage }, dispatch] = useAtom(shortVideoProgressAtom);
 
   const handleUpdatePercentage = (percentage: number) => {
     dispatch({
       type: "JUMP_TO",
-      payload: { jumpToTime: (duration * percentage) / 100 },
+      payload: { percentage },
     });
   };
 

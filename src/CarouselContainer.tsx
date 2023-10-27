@@ -11,6 +11,12 @@ import { carouselIdAtom } from "./carouselAtoms";
 import { fetchFollowingList, fetchForYouList, mapToCarouselType } from "./api";
 import { useHydrateAtoms } from "jotai/react/utils";
 import { useQuery } from "@tanstack/react-query";
+import { ScopeProvider } from "jotai-scope";
+import {
+  shortVideoAtom,
+  shortVideoDispatchAtom,
+  shortVideoProgressAtom,
+} from "./shortVideoAtoms";
 
 type CarouselContainerProps = {
   name: Id;
@@ -93,13 +99,21 @@ const Carousel = ({ focus }: { focus: boolean }) => {
         const { play_url, cover, title } = item;
         return (
           <CarouselItem key={i} className={styles.itemContainer}>
-            <ShortVideo
-              index={i}
-              video={{ src: play_url }}
-              image={{ alt: title, src: cover }}
-            />
-            <ShortVideoInformation />
-            <ShortVideoControl />
+            <ScopeProvider
+              atoms={[
+                shortVideoAtom,
+                shortVideoDispatchAtom,
+                shortVideoProgressAtom,
+              ]}
+            >
+              <ShortVideo
+                index={i}
+                video={{ src: play_url }}
+                image={{ alt: title, src: cover }}
+              />
+              <ShortVideoInformation />
+              <ShortVideoControl />
+            </ScopeProvider>
           </CarouselItem>
         );
       })}

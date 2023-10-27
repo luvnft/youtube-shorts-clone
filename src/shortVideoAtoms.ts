@@ -12,12 +12,6 @@ type ShortVideoAction =
       type: "PAUSE" | "PLAY" | "RESET_JUMP_TIME";
     }
   | {
-      type: "JUMP_TO";
-      payload: {
-        jumpToTime: number;
-      };
-    }
-  | {
       type: "TIME_UPDATE";
       payload: {
         currentTime: number;
@@ -30,6 +24,13 @@ type ShortVideoAction =
         duration: number;
       };
     };
+
+type ShortVideoProgressAction = {
+  type: "JUMP_TO";
+  payload: {
+    percentage: number;
+  };
+};
 
 const DEFAULT_STATE = {
   currentTime: 0,
@@ -45,6 +46,20 @@ export const shortVideoDispatchAtom = atom(
     set(shortVideoAtom, shortVideoReducer(get(shortVideoAtom), action));
   }
 );
+export const shortVideoProgressAtom = atom(
+  (get) => {
+    const { currentTime, duration } = get(shortVideoAtom);
+    const percentage =
+      currentTime === 0 || duration === 0 ? 0 : (currentTime / duration) * 100;
+
+    return {
+      percentage,
+    };
+  },
+  (get, set, action: ShortVideoProgressAction) => {
+    set(shortVideoAtom, shortVideoProgressReducer(get(shortVideoAtom), action));
+  }
+);
 
 const shortVideoReducer = (
   state: ShortVideoState,
@@ -55,12 +70,6 @@ const shortVideoReducer = (
       return {
         ...state,
         currentTime: action.payload.currentTime,
-      };
-    }
-    case "JUMP_TO": {
-      return {
-        ...state,
-        jumpToTime: action.payload.jumpToTime,
       };
     }
     case "RESET_JUMP_TIME": {
@@ -86,6 +95,25 @@ const shortVideoReducer = (
         ...state,
         currentTime: action.payload.currentTime,
         duration: action.payload.duration,
+      };
+    }
+    default: {
+      return state;
+    }
+  }
+};
+
+const shortVideoProgressReducer = (
+  state: ShortVideoState,
+  action: ShortVideoProgressAction
+): ShortVideoState => {
+  switch (action.type) {
+    case "JUMP_TO": {
+      const percentage =
+        action.payload.percentage < 0 ? 0 : action.payload.percentage;
+      return {
+        ...state,
+        jumpToTime: (state.duration * percentage) / 100,
       };
     }
     default: {
