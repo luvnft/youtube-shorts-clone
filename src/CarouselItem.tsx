@@ -1,10 +1,10 @@
-import { PropsWithChildren, useContext } from "react";
-import { CarouselState } from "./CarouselProvider";
+import { PropsWithChildren } from "react";
 
-const CarouselItem = ({ children }: PropsWithChildren) => {
-  const { itemClassName } = useContext(CarouselState);
-
-  return <div className={itemClassName}>{children}</div>;
+const CarouselItem = ({
+  children,
+  className,
+}: PropsWithChildren & { className: string }) => {
+  return <div className={className}>{children}</div>;
 };
 
 export default CarouselItem;

@@ -16,7 +16,7 @@ const DEFAULT_TAB_ID = Id.FOLLOWING;
 
 export const tabIdAtom = atom(DEFAULT_TAB_ID);
 export const tabAtom = atom((get) => ({ id: get(tabIdAtom) }));
-export const tabDispatchAtom = atom(null, (get, set, action: TabAction) => {
+export const tabDispatchAtom = atom(null, (_, set, action: TabAction) => {
   const { type, payload } = action;
   // reducer
   switch (type) {

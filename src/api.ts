@@ -7,6 +7,13 @@ type Payload = {
   play_url: string;
 };
 
+// TODO: 從 api.ts 拿出去
+type CarouselItem = Payload & {
+  id: string;
+  top: number;
+  left: number;
+};
+
 export const fetchFollowingList = (): Promise<Payload[]> =>
   fetch(FOLLOWING_URL)
     .then((response) => response.json())
@@ -17,8 +24,9 @@ export const fetchForYouList = (): Promise<Payload[]> =>
     .then((data) => (data ? data.items : []));
 
 // utils
-export const mapToCarouselType = (item: Payload, i: number) => {
+export const mapToCarouselType = (item: Payload, i: number): CarouselItem => {
   return {
+    ...item,
     id: item.title,
     top: i * document.documentElement.clientHeight,
     left: 0,
