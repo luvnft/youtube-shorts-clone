@@ -1,117 +1,101 @@
-import { HTMLProps, memo, useEffect, useRef, useState } from "react";
+import {
+  HTMLProps,
+  MouseEvent,
+  memo,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import Hls from "hls.js";
 import styles from "./shortVideo.module.css";
-import { useAtomValue, useSetAtom } from "jotai";
-import { shortVideoAtom, shortVideoDispatchAtom } from "./shortVideoAtoms";
+import { useAtomValue } from "jotai";
 import { carouselIdAtom } from "./carouselAtoms";
+import Video, { DefaultVideoMethod } from "./DefaultVideo";
+import ShortVideoInformation from "./ShortVideoInformation";
+import { playIcon } from "./Icon";
+import ProgressBar from "./ProgressBar";
 
 type ShortVideoProps = {
   index: number;
   video: HTMLProps<HTMLVideoElement>;
-  image: HTMLProps<HTMLImageElement>;
 };
 
-const ShortVideo = memo(
-  ({ index, video: videoProps, image: imgProps }: ShortVideoProps) => {
-    const [isShowThumbnail, setIsShowThumbnail] = useState(true);
-    const ref = useRef<HTMLVideoElement>(null);
-    const dispatch = useSetAtom(shortVideoDispatchAtom);
-    const { jumpToTime } = useAtomValue(shortVideoAtom);
-    const currentItemIndex = useAtomValue(carouselIdAtom);
-    const { src: videoSrc } = videoProps;
-    const isShowMuteButton = ref.current?.muted ?? true;
+const ShortVideo = memo(({ index, video: videoProps }: ShortVideoProps) => {
+  const ref = useRef<DefaultVideoMethod>(null);
+  const currentItemIndex = useAtomValue(carouselIdAtom);
+  const [percentage, setPercentage] = useState(0);
+  const { src: videoSrc } = videoProps;
+  const isShowMuteButton = ref.current?.muted ?? true;
+  const isShowPlayIcon = ref.current?.paused ?? true;
 
-    // bind hls
-    useEffect(() => {
-      let hls: Hls | null = null;
-      const video = ref.current as HTMLVideoElement;
-      if (currentItemIndex === index) {
-        if (video && videoSrc) {
-          if (Hls.isSupported()) {
-            hls = new Hls({
-              maxMaxBufferLength: 600,
-              maxBufferLength: 60,
-            });
-            hls.loadSource(videoSrc);
-            hls.attachMedia(video);
-          } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-            video.src = videoSrc;
-          }
+  // TODO: refactor here. 要把 ref 視為 Video 而不是 HTMLVideoElement i.e. 要想清楚哪些要 public
+  // bind hls
+  useEffect(() => {
+    let hls: Hls | null = null;
+    const video = ref.current as HTMLVideoElement;
+    if (currentItemIndex === index) {
+      if (video && videoSrc) {
+        if (Hls.isSupported()) {
+          hls = new Hls({
+            maxMaxBufferLength: 600,
+            maxBufferLength: 60,
+          });
+          hls.loadSource(videoSrc);
+          hls.attachMedia(video);
+        } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+          video.src = videoSrc;
         }
       }
-      return () => {
-        if (video) {
-          dispatch({ type: "PAUSE" });
-          video.pause();
-          video.currentTime = 0;
-        }
-        // if (hls) {
-        //   hls.detachMedia();
-        //   hls.destroy();
-        // }
-      };
-    }, [currentItemIndex, index, dispatch, videoSrc]);
-
-    // drag progress bar to update the video progress
-    useEffect(() => {
-      if (jumpToTime !== null) {
-        if (ref.current) {
-          const video = ref.current as HTMLVideoElement;
-          video.currentTime = jumpToTime;
-          dispatch({ type: "RESET_JUMP_TIME" });
-        }
-      }
-    }, [jumpToTime, dispatch]);
-
-    const handleTimeUpdate = () => {
-      const video = ref.current as HTMLVideoElement;
-      dispatch({
-        type: "TIME_UPDATE",
-        payload: {
-          currentTime: video.currentTime,
-        },
-      });
-    };
-
-    const handleDurationChange = () => {
-      const video = ref.current as HTMLVideoElement;
-      dispatch({
-        type: "INIT",
-        payload: {
-          currentTime: video.currentTime,
-          duration: video.duration,
-        },
-      });
-    };
-
-    const toggleVideo = () => {
-      const video = ref.current as HTMLVideoElement;
-      if (video.paused) {
-        video.play();
-      } else {
+    }
+    return () => {
+      if (video) {
         video.pause();
+        video.currentTime = 0;
       }
+      // if (hls) {
+      //   hls.detachMedia();
+      //   hls.destroy();
+      // }
     };
+  }, [currentItemIndex, index, videoSrc]);
 
-    const handlePlaying = () => {
-      setIsShowThumbnail(false);
-      dispatch({ type: "PLAY" });
-    };
+  const toggleMuteButton = () => {
+    ref.current?.toggleMute();
+  };
 
-    const handlePause = () => {
-      if (currentItemIndex !== index) {
-        setIsShowThumbnail(true);
-      }
-      dispatch({ type: "PAUSE" });
-    };
+  // drag progress bar to update the video progress
+  const handleUpdatePercentage = (percentage: number) => {
+    ref.current?.gotoTimestamp(percentage);
+  };
 
-    const toggleMuteButton = () => {
-      const video = ref.current as HTMLVideoElement;
-      video.muted = !video.muted;
-    };
+  const togglePlayAndPause = (e: MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      ref.current?.togglePlayAndPause();
+    }
+  };
 
-    return (
-      <>
+  return (
+    <div className={styles.videoContainer}>
+      <Video
+        {...videoProps}
+        playsInline
+        loop
+        muted
+        autoPlay
+        ref={ref}
+        onTimeUpdate={() => {
+          const time = ref.current?.getSeekPercentage();
+          if (time) {
+            setPercentage(time);
+          }
+        }}
+      />
+      <div
+        className={styles.videoOverlay}
+        aria-label="video-overlay"
+        onClick={togglePlayAndPause}
+      >
+        {/* TODO: 沒辦法靜音 */}
         {isShowMuteButton && (
           <button
             type="button"
@@ -121,27 +105,24 @@ const ShortVideo = memo(
             取消靜音
           </button>
         )}
-        <img
-          {...imgProps}
-          className={styles.thumbnail}
-          style={{ opacity: isShowThumbnail ? 1 : 0 }}
-        />
-        <video
-          {...videoProps}
-          playsInline
-          loop
-          muted
-          autoPlay
-          ref={ref}
-          onTimeUpdate={handleTimeUpdate}
-          onDurationChange={handleDurationChange}
-          onClick={toggleVideo}
-          onPlaying={handlePlaying}
-          onPause={handlePause}
-        />
-      </>
-    );
-  }
-);
+        <ShortVideoInformation />
+        {isShowPlayIcon && (
+          <div
+            className={styles.playIcon}
+            onClick={() => ref.current?.togglePlayAndPause()}
+          >
+            {playIcon}
+          </div>
+        )}
+        <div className={styles.progressBar} data-progressbar="true">
+          <ProgressBar
+            percentage={percentage}
+            onPercentageChange={handleUpdatePercentage}
+          />
+        </div>
+      </div>
+    </div>
+  );
+});
 
 export default ShortVideo;

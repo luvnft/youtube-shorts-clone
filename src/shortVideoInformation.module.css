@@ -2,13 +2,19 @@
   position: absolute;
   bottom: 100px;
   left: 0;
-  width: 100%;
   background-color: transparent;
-  visibility: none;
-  /* FIXME: 要調整架構 */
-  pointer-events: none;
+  color: #fff;
 }
 
+.profileActions {
+  inset-inline-end: 1rem;
+  width: fit-content;
+  margin-left: auto;
+}
+
+.info {
+  inset-inline-start: 1rem;
+}
 .profile {
   display: flex;
   gap: 4px;
@@ -23,21 +29,10 @@
   visibility: visible;
 }
 
-.profileActions {
-}
-
 .pivotButton {
   padding: 2px;
   border-radius: 2px;
   line-height: 0rem;
   margin: auto;
   margin: 0.5rem 0.25rem;
-}
-
-.info {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  padding: 0 0.5rem 0 1rem;
-  color: #fff;
 }
