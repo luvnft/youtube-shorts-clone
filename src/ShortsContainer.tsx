@@ -4,7 +4,7 @@ import { CSSProperties, PropsWithChildren } from "react";
 import { Id, tabIdAtom } from "./tabAtoms";
 import { useAtomValue } from "jotai";
 
-const MainContent = ({
+const ShortsContainer = ({
   className,
   style,
 }: PropsWithChildren & {
@@ -14,7 +14,7 @@ const MainContent = ({
   const tabId = useAtomValue(tabIdAtom);
 
   return (
-    <main className={className} style={style as CSSProperties}>
+    <div className={className} style={style as CSSProperties}>
       <div>
         <TabContainer>
           <CarouselContainer
@@ -24,8 +24,8 @@ const MainContent = ({
           <CarouselContainer name={Id.FOR_YOU} focus={tabId === Id.FOR_YOU} />
         </TabContainer>
       </div>
-    </main>
+    </div>
   );
 };
 
-export default MainContent;
+export default ShortsContainer;
