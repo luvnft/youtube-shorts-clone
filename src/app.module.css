@@ -1,9 +1,26 @@
 :root {
   --header-height: 60px;
+  --text-color: #0f0f0f;
+  --short-video-width: 460px;
 }
 
 html {
-  background-color: #232323;
+  background-color: #fff;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--text-color);
+  text-decoration: none;
+}
+
+div {
+  box-sizing: border-box;
 }
 
 .header {
@@ -11,7 +28,7 @@ html {
   top: 0;
   left: 0;
   z-index: 600;
-  background-color: #1c1c1c;
+  background-color: transparent;
   width: 100%;
   height: var(--header-height);
   box-sizing: border-box;
@@ -23,20 +40,30 @@ html {
 }
 
 .main {
+  padding-block-start: 0;
   height: 100%;
+  display: flex;
+}
+
+@media screen and (min-width: 768px) {
+  .header {
+    background-color: #fff;
+  }
+  .main {
+    padding-block-start: var(--header-height);
+    height: calc(100% - var(--header-height));
+  }
 }
 
 .shortContainer {
+  width: var(--short-video-width);
   height: 100%;
+  box-sizing: border-box;
   overflow: hidden;
   margin: auto;
 }
 
 .aside {
-  position: fixed;
   height: 100%;
-  top: var(--header-height);
-  left: 0;
-  z-index: 400;
   background-color: #1c1c1c;
 }

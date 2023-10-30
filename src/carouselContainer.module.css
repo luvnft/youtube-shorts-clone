@@ -2,7 +2,7 @@
   margin: 0 auto;
   position: relative;
   transform: translateY(0);
-  height: 100vh;
+  height: 100%;
   scroll-snap-type: y mandatory; /* height CAN'T USE PERCENT */
   overflow-y: auto;
   overflow-x: hidden;
@@ -13,6 +13,14 @@
   height: 100%;
   scroll-snap-align: start;
   position: relative;
+  border-radius: 0px;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 768px) {
+  .itemContainer {
+    border-radius: 15px;
+  }
 }
 
 .itemContainer img,

@@ -1,21 +1,18 @@
 import CarouselContainer from "./CarouselContainer";
 import { TabContainer } from "./Tab";
-import { CSSProperties, PropsWithChildren } from "react";
+import { CSSProperties, HTMLAttributes, PropsWithChildren } from "react";
 import { Id, tabIdAtom } from "./tabAtoms";
 import { useAtomValue } from "jotai";
 
 const ShortsContainer = ({
   className,
   style,
-}: PropsWithChildren & {
-  className: string;
-  style: { [key: string]: string };
-}) => {
+}: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
   const tabId = useAtomValue(tabIdAtom);
 
   return (
     <div className={className} style={style as CSSProperties}>
-      <div>
+      <div style={{ height: "100%" }}>
         <TabContainer>
           <CarouselContainer
             name={Id.FOLLOWING}

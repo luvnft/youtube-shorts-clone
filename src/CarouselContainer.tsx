@@ -44,6 +44,7 @@ const Carousel = ({ focus }: { focus: boolean }) => {
   const items = data?.map(mapToCarouselType) ?? [];
   const { top = 0, left = 0 } = items[currentItemIndex] ?? {};
   const maxLength = items.length;
+  const isMobile = window.innerWidth <= 768;
 
   // bind 手勢操作
   useEffect(() => {
@@ -80,11 +81,9 @@ const Carousel = ({ focus }: { focus: boolean }) => {
       className={styles.container}
       ref={ref}
       style={{
-        height:
-          // TODO: 改成判斷 useragent
-          window.innerWidth <= 768
-            ? window.innerHeight || document.documentElement.clientHeight
-            : "100vh",
+        height: isMobile
+          ? window.innerHeight || document.documentElement.clientHeight
+          : "100%",
       }}
     >
       {items.map((item, i) => {
