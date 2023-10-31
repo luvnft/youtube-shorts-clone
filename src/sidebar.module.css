@@ -6,36 +6,24 @@
   box-sizing: border-box;
 }
 
-.link {
-  display: flex;
-  justify-content: flex-start;
-  gap: 1rem;
-  padding-inline-start: 1rem;
-}
-
-.link > svg {
-  width: 1rem;
-}
-
-.listItem {
-  background-color: #fff;
-  box-sizing: border-box;
-  padding-block: 0.8rem;
-}
-
-.listItem.active {
-  background-color: #f2f2f2;
-}
-
 .section {
-  background-color: #fff;
+  padding: 1rem;
 }
 
-.section > h3 {
+.footer > ul {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.footer > ul {
+  margin-block-end: 1rem;
+}
+
+.copyright {
   padding-inline-start: 1rem;
-  margin-block: 1rem 0rem;
-}
-
-.section + .section {
-  border-block-start: 1px solid rgba(0, 0, 0, 0.1);
+  padding-block-end: 1rem;
+  font-weight: 200;
 }
