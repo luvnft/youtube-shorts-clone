@@ -17,10 +17,14 @@ npm install
 npm run api
 ```
 
-3. client server
+3. web server
 
 ```sh
-vite run build
+npm run build
 
 npx serve dist
 ```
+
+4. client
+
+連 `localhost:3000`
