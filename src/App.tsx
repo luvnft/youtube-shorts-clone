@@ -1,10 +1,9 @@
 import styles from "./app.module.css";
-import Tab from "./Tab";
-import { Id as TabId } from "./tabAtoms";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ShortsContainer from "./ShortsContainer";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import Sidebar from "./Sidebar";
+import Header from "./Header";
 
 const queryClient = new QueryClient();
 const ASIDE_WIDTH = 280;
@@ -16,11 +15,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <header className={styles.header}>
-        <img src="/vite.svg" alt="log" />
-        <Tab tabId={TabId.FOLLOWING}>following</Tab>
-        <Tab tabId={TabId.FOR_YOU}>for you</Tab>
-      </header>
+      <Header className={styles.header} />
       <main className={styles.main}>
         {isDesktopOrLaptop && (
           <Sidebar
