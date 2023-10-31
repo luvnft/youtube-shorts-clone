@@ -1,16 +1,25 @@
 import styles from "./iconButton.module.css";
-import { PropsWithChildren, ReactNode } from "react";
+import { HTMLAttributes, PropsWithChildren, ReactNode } from "react";
 
-type IconButtonProps = {
+type IconButtonProps = HTMLAttributes<HTMLLabelElement> & {
   icon: ReactNode;
+  theme?: "dark" | "light";
 };
 
 const IconButton = ({
   icon,
   children,
-}: PropsWithChildren & IconButtonProps) => {
+  className,
+  theme = "light",
+}: PropsWithChildren<IconButtonProps>) => {
   return (
-    <label className={styles.container}>
+    <label
+      className={[
+        styles.container,
+        theme === "dark" && styles.dark,
+        className,
+      ].join(" ")}
+    >
       <button type="button" className={styles.icon}>
         {icon}
       </button>

@@ -78,6 +78,7 @@ const ShortVideo = memo(({ index, video: videoProps }: ShortVideoProps) => {
     <div className={styles.videoContainer}>
       <Video
         {...videoProps}
+        className={styles.video}
         playsInline
         loop
         muted

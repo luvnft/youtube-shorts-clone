@@ -7,9 +7,20 @@
 }
 
 .profileActions {
-  inset-inline-end: 1rem;
-  width: fit-content;
-  margin-left: auto;
+  /* calc(viewport width - self width - padding right) */
+  transform: translateX(calc(100vi - 100% - 1rem));
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+@media screen and (min-width: 768px) {
+  .profileActions {
+    /* calc(fixed short video width + padding left)*/
+    transform: translateX(calc(var(--short-video-width) + 1rem));
+    bottom: 0;
+    gap: 1rem;
+  }
 }
 
 .info {

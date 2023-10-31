@@ -1,3 +1,4 @@
+/* light theme */
 .container {
   text-align: center;
   display: block;
@@ -26,3 +27,14 @@
   line-height: 20px;
   margin-top: 4px;
 }
+/* light theme */
+
+/* dark theme */
+.container.dark {
+  color: #000;
+}
+
+.icon {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+/* dark theme */
