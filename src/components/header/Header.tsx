@@ -13,8 +13,6 @@ const Header = ({
   className,
   ...restProps
 }: HTMLAttributes<HTMLHeadElement>) => {
-  const isMobile = window.innerWidth <= 768;
-
   return (
     <header {...restProps} className={[className, styles.header].join(" ")}>
       <div>
@@ -23,30 +21,28 @@ const Header = ({
         </button>
         <img src={logo.src} alt="logo" />
       </div>
-      {!isMobile && (
-        <div>
-          <div className={styles.searchTextBox}>
-            <input type="text" name="search" placeholder="搜尋" />
-            <button type="button" className={styles.iconButton}>
-              {searchIcon}
-            </button>
-          </div>
+
+      <div>
+        <div className={styles.searchTextBox}>
+          <input type="text" name="search" placeholder="搜尋" />
           <button type="button" className={styles.iconButton}>
-            {microphoneIcon}
+            {searchIcon}
           </button>
         </div>
-      )}
-      {!isMobile && (
-        <div>
-          <button type="button" className={styles.iconButton}>
-            {ellipsisVerticalIcon}
-          </button>
-          <button type="button" className={styles.userButton}>
-            {userCircleIcon}
-            <span>登入</span>
-          </button>
-        </div>
-      )}
+        <button type="button" className={styles.iconButton}>
+          {microphoneIcon}
+        </button>
+      </div>
+
+      <div>
+        <button type="button" className={styles.iconButton}>
+          {ellipsisVerticalIcon}
+        </button>
+        <button type="button" className={styles.userButton}>
+          {userCircleIcon}
+          <span>登入</span>
+        </button>
+      </div>
     </header>
   );
 };

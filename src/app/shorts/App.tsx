@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ShortsContainer from "@/components/shortVideo/ShortsContainer";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import Sidebar from "@/components/sidebar/Sidebar";
-import Header from "@/components/header/Header";
 
 const queryClient = new QueryClient();
 const ASIDE_WIDTH = 280;
@@ -15,7 +14,6 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Header className={styles.header} />
       <main className={styles.main}>
         {isDesktopOrLaptop && (
           <Sidebar

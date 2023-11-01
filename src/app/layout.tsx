@@ -1,4 +1,7 @@
+import Header from "@/components/header/Header";
 import type { Metadata } from "next";
+import "./index.css";
+import styles from "./index.module.css";
 
 export const metadata: Metadata = {
   title: "Next.js + React + TS",
@@ -13,7 +16,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div id="root">{children}</div>
+        <Header className={styles.header} />
+        <main className={styles.main}>{children}</main>
       </body>
     </html>
   );
