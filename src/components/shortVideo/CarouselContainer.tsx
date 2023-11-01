@@ -1,12 +1,16 @@
 import { PropsWithChildren, useEffect, useRef } from "react";
 import styles from "./carouselContainer.module.css";
 import Hammer from "hammerjs";
-import { Id } from "../tab/tabAtoms";
+import { Id } from "@/components/tab/tabAtoms";
 import { PrimitiveAtom, Provider, atom, useAtom, useAtomValue } from "jotai";
 import CarouselItem from "./CarouselItem";
 import ShortVideo from "./ShortVideo";
 import { carouselIdAtom } from "./carouselAtoms";
-import { fetchFollowingList, fetchForYouList, mapToCarouselType } from "../../api";
+import {
+  fetchFollowingList,
+  fetchForYouList,
+  mapToCarouselType,
+} from "../../api";
 import { useHydrateAtoms } from "jotai/react/utils";
 import { useQuery } from "@tanstack/react-query";
 

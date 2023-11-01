@@ -6,8 +6,8 @@ import {
   microphoneIcon,
   searchIcon,
   userCircleIcon,
-} from "../icon/Icon";
-import logo from "../../assets/logo.svg";
+} from "@/components/icon/Icon";
+import logo from "@/assets/logo.svg";
 
 const Header = ({
   className,

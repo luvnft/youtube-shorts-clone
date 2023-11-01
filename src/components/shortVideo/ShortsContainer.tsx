@@ -1,7 +1,7 @@
 import CarouselContainer from "./CarouselContainer";
-import { TabContainer } from "../tab/Tab";
+import { TabContainer } from "@/components/tab/Tab";
 import { CSSProperties, HTMLAttributes, PropsWithChildren } from "react";
-import { Id, tabIdAtom } from "../tab/tabAtoms";
+import { Id, tabIdAtom } from "@/components/tab/tabAtoms";
 import { useAtomValue } from "jotai";
 
 const ShortsContainer = ({

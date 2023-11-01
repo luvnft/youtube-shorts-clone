@@ -1,4 +1,4 @@
-import { Id as TabId, tabIdAtom } from "./components/tab/tabAtoms";
+import { Id as TabId, tabIdAtom } from "@/components/tab/tabAtoms";
 import { atom } from "jotai";
 
 type VideoCache = {
