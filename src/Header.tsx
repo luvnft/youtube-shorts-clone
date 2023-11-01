@@ -7,6 +7,7 @@ import {
   searchIcon,
   userCircleIcon,
 } from "./Icon";
+import logo from "./app/assets/logo.svg";
 
 const Header = ({
   className,
@@ -20,7 +21,7 @@ const Header = ({
         <button type="button" className={styles.iconButton}>
           {bars3Icon}
         </button>
-        <img src="/vite.svg" alt="log" />
+        <img src={logo.src} alt="logo" />
       </div>
       {!isMobile && (
         <div>

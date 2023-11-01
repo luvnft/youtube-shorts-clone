@@ -1,5 +1,5 @@
-const FOLLOWING_URL = `${import.meta.env.VITE_APP_SERVER}/following_list`;
-const FOR_YOU_URL = `${import.meta.env.VITE_APP_SERVER}/for_you_list`;
+const FOLLOWING_URL = `${process.env.NEXT_PUBLIC_API_SERVER_BASE_PATH}/following_list`;
+const FOR_YOU_URL = `${process.env.NEXT_PUBLIC_API_SERVER_BASE_PATH}/for_you_list`;
 
 type Payload = {
   title: string;

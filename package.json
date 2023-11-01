@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --host",
-    "build": "tsc && vite build",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "api": "json-server --watch db.json --port 8088"
@@ -17,12 +18,14 @@
     "hls.js": "^1.4.12",
     "jotai": "^2.5.0",
     "jotai-scope": "^0.4.0",
+    "next": "^14.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^4.34.1",
     "@types/hammerjs": "^2.0.42",
+    "@types/node": "^20.8.10",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -33,7 +36,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "json-server": "^0.17.4",
-    "typescript": "^5.0.2",
-    "vite": "^4.4.5"
+    "typescript": "^5.0.2"
   }
 }
