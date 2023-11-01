@@ -10,10 +10,10 @@ import Hls from "hls.js";
 import styles from "./shortVideo.module.css";
 import { useAtomValue } from "jotai";
 import { carouselIdAtom } from "./carouselAtoms";
-import Video, { DefaultVideoMethod } from "./DefaultVideo";
+import Video, { DefaultVideoMethod } from "../defaultVideo/DefaultVideo";
 import ShortVideoInformation from "./ShortVideoInformation";
-import { playIcon } from "./Icon";
-import ProgressBar from "./ProgressBar";
+import { playIcon } from "../icon/Icon";
+import ProgressBar from "../progressbar/ProgressBar";
 
 type ShortVideoProps = {
   index: number;

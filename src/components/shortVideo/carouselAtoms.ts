@@ -1,6 +1,6 @@
 import { atom } from "jotai";
-import { userConfigAtom, userConfigDispatchAtom } from "./userConfigAtoms";
-import { tabIdAtom } from "./tabAtoms";
+import { userConfigAtom, userConfigDispatchAtom } from "../../userConfigAtoms";
+import { tabIdAtom } from "../tab/tabAtoms";
 
 type CarouselAction =
   | {

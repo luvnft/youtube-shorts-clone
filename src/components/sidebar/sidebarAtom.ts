@@ -20,7 +20,7 @@ import {
   squaresPlusIcon,
   trophyIcon,
   videoCameraIcon,
-} from "./Icon";
+} from "../icon/Icon";
 import { ReactElement } from "react";
 
 export type SidebarSection = {

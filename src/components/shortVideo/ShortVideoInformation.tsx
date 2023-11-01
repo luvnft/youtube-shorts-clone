@@ -1,5 +1,5 @@
-import { comment, moreInfo, share, thumbDown, thumbUp } from "./Icon";
-import IconButton from "./IconButton";
+import { comment, moreInfo, share, thumbDown, thumbUp } from "../icon/Icon";
+import IconButton from "../iconButton/IconButton";
 import styles from "./shortVideoInformation.module.css";
 
 const ShortVideoInformation = () => {
