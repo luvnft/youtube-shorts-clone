@@ -1,6 +1,5 @@
 import { atom } from "jotai";
 import { userConfigAtom, userConfigDispatchAtom } from "../../userConfigAtoms";
-import { Id, tabIdAtom } from "@/components/tab/tabAtoms";
 
 type CarouselAction =
   | {
@@ -17,8 +16,7 @@ type CarouselAction =
 export const carouselIdAtom = atom(
   (get) => {
     const userConfig = get(userConfigAtom);
-    const tabId = get(tabIdAtom);
-    return userConfig[tabId]?.index ?? 0;
+    return userConfig.video?.index ?? 0;
   },
   (get, set, action: CarouselAction) => {
     const newId = carouselReducer(get(carouselIdAtom), action);
@@ -30,7 +28,6 @@ export const carouselIdAtom = atom(
     });
   }
 );
-export const carouselTabIdAtom = atom(Id.FOLLOWING);
 
 const carouselReducer = (state: number, action: CarouselAction): number => {
   switch (action.type) {

@@ -1,4 +1,3 @@
-import { Id as TabId, tabIdAtom } from "@/components/tab/tabAtoms";
 import { atom } from "jotai";
 
 type VideoCache = {
@@ -8,8 +7,7 @@ type VideoCache = {
 };
 
 type UserConfig = {
-  // tabId undefined mean no cache in this tab
-  [key in keyof typeof TabId]?: VideoCache;
+  video?: VideoCache;
 };
 
 type UserConfigAction =
@@ -34,33 +32,24 @@ export const userConfigAtom = atom<UserConfig>({});
 export const userConfigDispatchAtom = atom(
   null,
   (get, set, action: UserConfigAction) => {
-    const tabId = get(tabIdAtom);
     const useConfigState = get(userConfigAtom);
 
     // reducer
-    set(
-      userConfigAtom,
-      userConfigReducer<typeof tabId>(useConfigState, action, tabId)
-    );
+    set(userConfigAtom, userConfigReducer(useConfigState, action));
   }
 );
 
-export function userConfigReducer<T>(
+export function userConfigReducer(
   state: UserConfig,
-  action: UserConfigAction,
-  context: T
+  action: UserConfigAction
 ): UserConfig {
-  // 因為不想 import tabId，因此將 context 轉成 string 但看起來難以閱讀
-  // NIT: 應該改成 tabId？還是應該在arg 就限制tabid?
-  const tabId = context as string;
-
   switch (action.type) {
     case "UPDATE_VIDEO_CACHE": {
       const { video } = action.payload;
       const { index, ...videoProps } = video;
       return {
         ...state,
-        [tabId]: {
+        video: {
           index,
           ...videoProps,
         },
@@ -70,7 +59,7 @@ export function userConfigReducer<T>(
       const { index } = action.payload;
       return {
         ...state,
-        [tabId]: {
+        video: {
           index,
           currentTime: 0,
           duration: 0,
