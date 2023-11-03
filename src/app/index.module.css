@@ -9,9 +9,18 @@
   display: flex;
 }
 
+.aside {
+  height: 100%;
+  background-color: #1c1c1c;
+  width: 0;
+}
+
 @media screen and (min-width: 768px) {
   .main {
     padding-block-start: var(--header-height);
     height: calc(100% - var(--header-height));
+  }
+  .aside {
+    width: var(--sidebar-width);
   }
 }

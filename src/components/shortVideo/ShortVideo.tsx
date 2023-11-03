@@ -96,7 +96,6 @@ const ShortVideo = memo(({ index, video: videoProps }: ShortVideoProps) => {
         aria-label="video-overlay"
         onClick={togglePlayAndPause}
       >
-        {/* TODO: 沒辦法靜音 */}
         {isShowMuteButton && (
           <button
             type="button"

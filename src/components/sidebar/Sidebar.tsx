@@ -1,3 +1,7 @@
+"use client";
+// TODO 改成 server component
+// 把設定檔從 jotai 移到 server actions
+
 import { HTMLAttributes } from "react";
 import SidebarSection from "./SidebarSection";
 import { useAtomValue } from "jotai";

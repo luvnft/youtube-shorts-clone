@@ -1,9 +1,11 @@
-"use client";
-
 import dynamic from "next/dynamic";
+import styles from "./shorts.module.css";
 
-const App = dynamic(() => import("./App"), { ssr: false });
+const ShortsContainer = dynamic(
+  () => import("@/components/shortVideo/ShortsContainer"),
+  { ssr: false }
+);
 
-export default function Page() {
-  return <App />;
+export default function ShortsPage() {
+  return <ShortsContainer className={styles.shortContainer} />;
 }
