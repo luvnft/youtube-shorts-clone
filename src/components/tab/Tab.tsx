@@ -1,3 +1,5 @@
+"use client";
+
 import { HTMLProps, PropsWithChildren } from "react";
 import { Id as TabId, tabAtom, tabDispatchAtom } from "./tabAtoms";
 import styles from "./tab.module.css";
