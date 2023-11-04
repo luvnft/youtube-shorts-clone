@@ -1,4 +1,5 @@
 import { HTMLAttributes, PropsWithChildren } from "react";
+import Link from "next/link";
 import styles from "./sidebarSection.module.css";
 import InlineSvg from "../inline-svg/inlineSvg";
 
@@ -34,10 +35,10 @@ const SidebarSection = ({
                   link.key === "shortVideo" && styles.active,
                 ].join(" ")}
               >
-                <a href={link.href} className={styles.link}>
+                <Link href={link.href} className={styles.link}>
                   <InlineSvg src={link.icon}></InlineSvg>
                   {link.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

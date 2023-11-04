@@ -8,7 +8,7 @@ export const getTopSection = (): SidebarSectionProps => {
       {
         name: "Shorts",
         key: "shortVideo",
-        href: "/",
+        href: "/shorts",
         icon: "/icons/video-camera.svg",
       },
       {

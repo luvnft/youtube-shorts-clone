@@ -1,4 +1,5 @@
 import { HTMLAttributes } from "react";
+import Link from "next/link";
 import SidebarSection from "./SidebarSection";
 import {
   getTopSection,
@@ -42,42 +43,42 @@ const Sidebar = ({ className, ...restProps }: HTMLAttributes<HTMLElement>) => {
         <div className={[styles.section, styles.footer].join(" ")}>
           <ul>
             <li>
-              <a href="/">簡介</a>
+              <Link href="/">簡介</Link>
             </li>
             <li>
-              <a href="/">媒體</a>
+              <Link href="/">媒體</Link>
             </li>
             <li>
-              <a href="/">版權</a>
+              <Link href="/">版權</Link>
             </li>
             <li>
-              <a href="/">與我們聯絡</a>
+              <Link href="/">與我們聯絡</Link>
             </li>
             <li>
-              <a href="/">創作者</a>
+              <Link href="/">創作者</Link>
             </li>
             <li>
-              <a href="/">廣告</a>
+              <Link href="/">廣告</Link>
             </li>
             <li>
-              <a href="/">開發人員</a>
+              <Link href="/">開發人員</Link>
             </li>
           </ul>
           <ul>
             <li>
-              <a href="/">條款</a>
+              <Link href="/">條款</Link>
             </li>
             <li>
-              <a href="/">隱私權</a>
+              <Link href="/">隱私權</Link>
             </li>
             <li>
-              <a href="/">政策與安全性</a>
+              <Link href="/">政策與安全性</Link>
             </li>
             <li>
-              <a href="/">YouTube運作方式</a>
+              <Link href="/">YouTube運作方式</Link>
             </li>
             <li>
-              <a href="/">測試新功能</a>
+              <Link href="/">測試新功能</Link>
             </li>
           </ul>
         </div>
