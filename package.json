@@ -14,6 +14,7 @@
   "dependencies": {
     "@tanstack/react-query": "^4.35.7",
     "@uidotdev/usehooks": "^2.4.1",
+    "@use-gesture/react": "^10.3.0",
     "client-only": "^0.0.1",
     "clsx": "^2.0.0",
     "hammerjs": "^2.0.8",
@@ -23,6 +24,7 @@
     "next": "^14.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-spring": "^9.7.3",
     "server-only": "^0.0.1"
   },
   "devDependencies": {
