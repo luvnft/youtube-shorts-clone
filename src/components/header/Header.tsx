@@ -1,13 +1,7 @@
 import { HTMLAttributes } from "react";
 import styles from "./header.module.css";
-import {
-  bars3Icon,
-  ellipsisVerticalIcon,
-  microphoneIcon,
-  searchIcon,
-  userCircleIcon,
-} from "@/components/icon/Icon";
 import logo from "@/assets/logo.svg";
+import InlineSvg from "../inline-svg/inlineSvg";
 
 const Header = ({
   className,
@@ -17,7 +11,7 @@ const Header = ({
     <header {...restProps} className={[className, styles.header].join(" ")}>
       <div>
         <button type="button" className={styles.iconButton}>
-          {bars3Icon}
+          <InlineSvg src="/icons/bars-3.svg" />
         </button>
         <img src={logo.src} alt="logo" />
       </div>
@@ -26,20 +20,20 @@ const Header = ({
         <div className={styles.searchTextBox}>
           <input type="text" name="search" placeholder="搜尋" />
           <button type="button" className={styles.iconButton}>
-            {searchIcon}
+            <InlineSvg src="/icons/search.svg" />
           </button>
         </div>
         <button type="button" className={styles.iconButton}>
-          {microphoneIcon}
+          <InlineSvg src="/icons/microphone.svg" />
         </button>
       </div>
 
       <div>
         <button type="button" className={styles.iconButton}>
-          {ellipsisVerticalIcon}
+          <InlineSvg src="/icons/ellipsis-vertical.svg" />
         </button>
         <button type="button" className={styles.userButton}>
-          {userCircleIcon}
+          <InlineSvg src="/icons/user-circle.svg" />
           <span>登入</span>
         </button>
       </div>

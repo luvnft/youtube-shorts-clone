@@ -1,29 +1,24 @@
-"use client";
-// TODO 改成 server component
-// 把設定檔從 jotai 移到 server actions
-
 import { HTMLAttributes } from "react";
 import SidebarSection from "./SidebarSection";
-import { useAtomValue } from "jotai";
 import {
-  browseSectionAtom,
-  exploreSectionAtom,
-  moreSectionAtom,
-  subscriptionSectionAtom,
-  systemSectionAtom,
-  topSectionAtom,
-  userSectionAtom,
-} from "./sidebarAtom";
+  getTopSection,
+  getUserSection,
+  getSubscriptionSection,
+  getExploreSection,
+  getBrowseSection,
+  getMoreSection,
+  getSystemSection,
+} from "./sidebar.utils";
 import styles from "./sidebar.module.css";
 
 const Sidebar = ({ className, ...restProps }: HTMLAttributes<HTMLElement>) => {
-  const topSection = useAtomValue(topSectionAtom);
-  const userSection = useAtomValue(userSectionAtom);
-  const subscriptionSection = useAtomValue(subscriptionSectionAtom);
-  const exploreSection = useAtomValue(exploreSectionAtom);
-  const browseSection = useAtomValue(browseSectionAtom);
-  const moreSection = useAtomValue(moreSectionAtom);
-  const systemSection = useAtomValue(systemSectionAtom);
+  const topSection = getTopSection();
+  const userSection = getUserSection();
+  const subscriptionSection = getSubscriptionSection();
+  const exploreSection = getExploreSection();
+  const browseSection = getBrowseSection();
+  const moreSection = getMoreSection();
+  const systemSection = getSystemSection();
   const isAuth = false;
 
   return (

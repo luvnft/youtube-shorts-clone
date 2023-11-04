@@ -12,8 +12,8 @@ import { useAtomValue } from "jotai";
 import { carouselIdAtom } from "./carouselAtoms";
 import Video, { DefaultVideoMethod } from "../defaultVideo/DefaultVideo";
 import ShortVideoInformation from "./ShortVideoInformation";
-import { playIcon } from "../icon/Icon";
 import ProgressBar from "../progressbar/ProgressBar";
+import InlineSvg from "../inline-svg/inlineSvg";
 
 type ShortVideoProps = {
   index: number;
@@ -111,7 +111,7 @@ const ShortVideo = memo(({ index, video: videoProps }: ShortVideoProps) => {
             className={styles.playIcon}
             onClick={() => ref.current?.togglePlayAndPause()}
           >
-            {playIcon}
+            <InlineSvg src="/icons/play.svg" />
           </div>
         )}
         <div className={styles.progressBar} data-progressbar="true">

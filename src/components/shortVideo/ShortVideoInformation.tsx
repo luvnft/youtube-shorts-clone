@@ -1,4 +1,3 @@
-import { comment, moreInfo, share, thumbDown, thumbUp } from "../icon/Icon";
 import IconButton from "../iconButton/IconButton";
 import styles from "./shortVideoInformation.module.css";
 
@@ -18,19 +17,19 @@ const ShortVideoInformation = () => {
         </div>
       </div>
       <div className={[styles.front, styles.profileActions].join(" ")}>
-        <IconButton theme={iconButtonTheme} icon={thumbUp}>
+        <IconButton theme={iconButtonTheme} icon="/icons/thumb-up.svg">
           880
         </IconButton>
-        <IconButton theme={iconButtonTheme} icon={thumbDown}>
+        <IconButton theme={iconButtonTheme} icon="/icons/thumb-down.svg">
           不喜歡
         </IconButton>
-        <IconButton theme={iconButtonTheme} icon={comment}>
+        <IconButton theme={iconButtonTheme} icon="/icons/comment.svg">
           10
         </IconButton>
-        <IconButton theme={iconButtonTheme} icon={share}>
+        <IconButton theme={iconButtonTheme} icon="/icons/share.svg">
           分享
         </IconButton>
-        <IconButton theme={iconButtonTheme} icon={moreInfo} />
+        <IconButton theme={iconButtonTheme} icon="/icons/more-info.svg" />
         <button type="button" className={styles.pivotButton}>
           <img src="https://placehold.co/36x36/000/F00" alt="pivot-image" />
         </button>

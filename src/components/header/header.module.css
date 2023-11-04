@@ -96,7 +96,7 @@
   border-color: #def1ff;
 }
 
-.userButton > svg {
+.userButton svg {
   width: 1.5rem;
   height: 1.5rem;
 }

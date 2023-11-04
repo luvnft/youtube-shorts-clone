@@ -1,6 +1,18 @@
 import { HTMLAttributes, PropsWithChildren } from "react";
-import { SidebarSection as SidebarSectionProps } from "./sidebarAtom";
 import styles from "./sidebarSection.module.css";
+import InlineSvg from "../inline-svg/inlineSvg";
+
+export type SidebarSectionProps = {
+  title?: string;
+  links: SidebarLink[];
+};
+
+type SidebarLink = {
+  icon: string; // path
+  key: string;
+  name: string;
+  href: string;
+};
 
 const SidebarSection = ({
   title,
@@ -23,7 +35,7 @@ const SidebarSection = ({
                 ].join(" ")}
               >
                 <a href={link.href} className={styles.link}>
-                  {link.icon}
+                  <InlineSvg src={link.icon}></InlineSvg>
                   {link.name}
                 </a>
               </li>
