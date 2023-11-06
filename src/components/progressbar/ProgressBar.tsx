@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./progressbar.module.css";
+import Hammer from "hammerjs";
 
 const ProgressBar = ({
   percentage,

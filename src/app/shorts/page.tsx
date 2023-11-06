@@ -16,7 +16,7 @@ export default async function ShortsPage() {
   return (
     <div className={styles.shortContainer}>
       <div style={{ height: "100%" }}>
-        <Carousel focus data={list} />
+        <Carousel data={list} />
       </div>
     </div>
   );
