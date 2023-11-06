@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from "react";
 import styles from "./progressbar.module.css";
-import Hammer from "hammerjs";
+import { useSpring, animated } from "react-spring";
+import { useDrag } from "@use-gesture/react";
+import { useEffect } from "react";
 
+// TODO:  isDragging 時只改變 progressbar，!isDragging 觸發 onChange event
 const ProgressBar = ({
   percentage,
   onPercentageChange,
@@ -9,79 +11,43 @@ const ProgressBar = ({
   percentage: number;
   onPercentageChange: (percentage: number) => void;
 }) => {
-  const [isDragging, setIsDragging] = useState(false);
-  const [currentProgress, setCurrentProgress] = useState(percentage);
-  const ref = useRef(null);
+  const [{ width, left }, api] = useSpring(() => ({
+    width: percentage ?? 0,
+    left: percentage ?? 0,
+  }));
+  const bindDrag = useDrag(
+    ({ xy: [touchX], currentTarget, down }) => {
+      const containerRect = (
+        currentTarget as HTMLDivElement
+      ).getBoundingClientRect();
+      const progress =
+        ((touchX - containerRect.left) / containerRect.width) * 100;
+
+      if (progress <= 100 && progress >= 0) {
+        onPercentageChange(progress);
+        api.start({ width: progress, left: progress, immediate: down });
+      }
+    },
+    { axis: "x" }
+  );
 
   useEffect(() => {
-    const mc = new Hammer(ref.current || document.body);
-
-    mc.get("pan").set({
-      direction: Hammer.DIRECTION_HORIZONTAL,
-      threshold: 0,
-    });
-    mc.get("press").set({
-      time: 20,
-      threshold: 2,
-    });
-
-    mc.on("press", (e) => {
-      if (!ref.current) {
-        return;
-      }
-      e.preventDefault();
-      const container = ref.current as HTMLDivElement;
-      const containerRect = container.getBoundingClientRect();
-      const touchX = e.center.x - containerRect.left;
-      const progress = (touchX / containerRect.width) * 100;
-      setIsDragging(true);
-      setCurrentProgress(progress);
-    });
-
-    mc.on("panmove", (e) => {
-      if (!ref.current) {
-        return;
-      }
-      if (isDragging) {
-        const container = ref.current as HTMLDivElement;
-        const containerRect = container.getBoundingClientRect();
-        const touchX = e.center.x - containerRect.left;
-        const progress = (touchX / containerRect.width) * 100;
-
-        if (progress >= 0 && progress <= 100) {
-          setCurrentProgress(progress);
-        }
-      }
-    });
-
-    return () => {
-      mc.destroy();
-    };
-  }, [isDragging, currentProgress, onPercentageChange]);
-
-  const onRelease = () => {
-    setIsDragging(false);
-    onPercentageChange(currentProgress);
-  };
+    api.start({ width: percentage, left: percentage });
+  }, [percentage, api]);
 
   return (
-    <div
-      className={styles.progressContainer}
-      ref={ref}
-      onMouseUp={onRelease}
-      onTouchEnd={onRelease}
-    >
+    <animated.div {...bindDrag()} className={styles.progressContainer}>
       <div className={styles.progressBar}>
-        <div
+        <animated.div
           className={styles.progressInnerBar}
-          style={{ width: `${percentage}%` }}
-        ></div>
+          style={{ width: width.to((v) => `${v}%`) }}
+        ></animated.div>
       </div>
-      <div
+      <animated.div
         className={styles.progressBarPoint}
-        style={{ left: `${isDragging ? currentProgress : percentage}%` }}
-      ></div>
-    </div>
+        style={{ left: left.to((v) => `${v}%`) }}
+      ></animated.div>
+    </animated.div>
   );
 };
 
