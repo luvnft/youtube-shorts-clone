@@ -28,17 +28,15 @@ const Carousel = ({ data }: CarouselProps) => {
       ? window.innerHeight || document.documentElement.clientHeight
       : "100%",
     y: 0,
+    marginTop: 0,
   }));
   const bindDrag = useDrag(({ swipe: [, swipeY] }) => {
-    const shouldAddMargin = !isMobile;
-
     if (swipeY < 0) {
       // swipe next
       // animation
       if (currentItemIndex + 1 < maxLength) {
-        const marginValue = shouldAddMargin ? (currentItemIndex + 1) * 3 : 0;
         api.start({
-          y: (currentItemIndex + 1) * 100 * -1 + marginValue,
+          y: (currentItemIndex + 1) * 100 * -1,
         });
       }
       // state
@@ -47,9 +45,8 @@ const Carousel = ({ data }: CarouselProps) => {
       // swipe previous
       // animation
       if (currentItemIndex - 1 >= 0) {
-        const marginValue = shouldAddMargin ? (currentItemIndex - 1) * 3 : 0;
         api.start({
-          y: (currentItemIndex - 1) * 100 * -1 + marginValue,
+          y: (currentItemIndex - 1) * 100 * -1,
         });
       }
       // state
@@ -69,6 +66,7 @@ const Carousel = ({ data }: CarouselProps) => {
       style={{
         height,
         y: y.to((v) => `${v}%`),
+        marginTop: isMobile ? 0 : `${Math.max(0, currentItemIndex * 3)}%`, // 3 is .itemContainer + .itemContainer margin
       }}
     >
       {items.map((item, i) => {

@@ -76,21 +76,24 @@ const ShortVideo = memo(({ index, video: videoProps }: ShortVideoProps) => {
 
   return (
     <div className={styles.videoContainer}>
-      <Video
-        {...videoProps}
-        className={styles.video}
-        playsInline
-        loop
-        muted
-        autoPlay
-        ref={ref}
-        onTimeUpdate={() => {
-          const time = ref.current?.getSeekPercentage();
-          if (time) {
-            setPercentage(time);
-          }
-        }}
-      />
+      <div className={styles.videoBorder}>
+        <Video
+          {...videoProps}
+          className={styles.video}
+          playsInline
+          loop
+          muted
+          autoPlay
+          ref={ref}
+          onTimeUpdate={() => {
+            const time = ref.current?.getSeekPercentage();
+            if (time) {
+              setPercentage(time);
+            }
+          }}
+        />
+      </div>
+
       <div
         className={styles.videoOverlay}
         aria-label="video-overlay"

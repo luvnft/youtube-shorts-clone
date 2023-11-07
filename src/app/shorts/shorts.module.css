@@ -3,4 +3,5 @@
   box-sizing: border-box;
   overflow: hidden;
   margin: auto;
+  flex-grow: 1;
 }
