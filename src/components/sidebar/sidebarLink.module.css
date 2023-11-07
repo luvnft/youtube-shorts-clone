@@ -1,0 +1,21 @@
+.link {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  padding-inline-start: 1rem;
+  align-items: center;
+}
+
+.link svg {
+  width: 1rem;
+}
+
+.listItem {
+  background-color: #fff;
+  box-sizing: border-box;
+  padding-block: 0.8rem;
+}
+
+.listItem.active {
+  background-color: #f2f2f2;
+}
