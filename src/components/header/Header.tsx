@@ -2,17 +2,17 @@ import { HTMLAttributes } from "react";
 import styles from "./header.module.css";
 import logo from "@/assets/logo.svg";
 import InlineSvg from "../inline-svg/inlineSvg";
+import SidebarMenuButton from "./SidebarMenuButton";
+import clsx from "clsx";
 
 const Header = ({
   className,
   ...restProps
 }: HTMLAttributes<HTMLHeadElement>) => {
   return (
-    <header {...restProps} className={[className, styles.header].join(" ")}>
+    <header {...restProps} className={clsx(className, styles.header)}>
       <div>
-        <button type="button" className={styles.iconButton}>
-          <InlineSvg src="/icons/bars-3.svg" />
-        </button>
+        <SidebarMenuButton />
         <img src={logo.src} alt="logo" />
       </div>
 

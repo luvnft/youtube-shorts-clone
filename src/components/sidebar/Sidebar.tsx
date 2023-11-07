@@ -11,6 +11,8 @@ import {
   getSystemSection,
 } from "./sidebar.utils";
 import styles from "./sidebar.module.css";
+import clsx from "clsx";
+import SideBarResponsiveContainer from "./SideBarResponsiveContainer";
 
 const Sidebar = ({ className, ...restProps }: HTMLAttributes<HTMLElement>) => {
   const topSection = getTopSection();
@@ -23,7 +25,7 @@ const Sidebar = ({ className, ...restProps }: HTMLAttributes<HTMLElement>) => {
   const isAuth = false;
 
   return (
-    <aside {...restProps} className={[className, styles.sidebar].join(" ")}>
+    <SideBarResponsiveContainer className={className} {...restProps}>
       <SidebarSection {...topSection} />
       <SidebarSection {...userSection} />
       {isAuth ? (
@@ -40,7 +42,7 @@ const Sidebar = ({ className, ...restProps }: HTMLAttributes<HTMLElement>) => {
       <SidebarSection {...moreSection} />
       <SidebarSection {...systemSection} />
       <SidebarSection links={[]}>
-        <div className={[styles.section, styles.footer].join(" ")}>
+        <div className={clsx(styles.section, styles.footer)}>
           <ul>
             <li>
               <Link href="/">簡介</Link>
@@ -83,8 +85,7 @@ const Sidebar = ({ className, ...restProps }: HTMLAttributes<HTMLElement>) => {
           </ul>
         </div>
       </SidebarSection>
-      <span className={styles.copyright}>@2023 版權聲明</span>
-    </aside>
+    </SideBarResponsiveContainer>
   );
 };
 

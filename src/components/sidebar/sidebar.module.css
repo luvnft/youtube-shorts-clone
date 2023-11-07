@@ -1,12 +1,3 @@
-.sidebar {
-  overflow-y: auto;
-  font-size: 0.9rem;
-  padding-block-end: 0.5rem;
-  background-color: #fff;
-  box-sizing: border-box;
-  /* max-inline-size: 1; */
-}
-
 .section {
   padding: 1rem;
 }
@@ -21,10 +12,4 @@
 
 .footer > ul {
   margin-block-end: 1rem;
-}
-
-.copyright {
-  padding-inline-start: 1rem;
-  padding-block-end: 1rem;
-  font-weight: 200;
 }

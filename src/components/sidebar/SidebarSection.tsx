@@ -1,5 +1,5 @@
 import { HTMLAttributes, PropsWithChildren } from "react";
-import styles from "./sidebarSection.module.css";
+import styles from "./sidebarResponsiveContainer.module.css";
 import clsx from "clsx";
 import SidebarLink from "./SidebarLink";
 
@@ -13,6 +13,7 @@ export type SidebarLinkProps = {
   id: string;
   name: string;
   href: string;
+  showInCompactMode: boolean;
 };
 
 const SidebarSection = ({
@@ -21,8 +22,16 @@ const SidebarSection = ({
   links = [],
   children,
 }: PropsWithChildren<HTMLAttributes<HTMLElement> & SidebarSectionProps>) => {
+  const isShowSection = links.some((link) => link.showInCompactMode);
+
   return (
-    <div className={clsx(className, styles.section)}>
+    <div
+      className={clsx(
+        className,
+        styles.section,
+        isShowSection && styles.smallSection
+      )}
+    >
       {children || (
         <>
           {title && <h3>{title}</h3>}
