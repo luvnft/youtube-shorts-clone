@@ -2,8 +2,22 @@ import dynamic from "next/dynamic";
 import styles from "./shorts.module.css";
 
 async function getList() {
-  const res = await fetch("http://localhost:3000/shorts/api?tab_id=FOLLOWING");
-  return res.json().then((json) => json.data?.items ?? []);
+  try {
+    const res = await fetch(
+      `${process.env.STREAM_API_BASE_PATH}/following_list`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return res.json().then((json) => {
+      return json?.items ?? [];
+    });
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
 }
 
 const Carousel = dynamic(() => import("@/components/shortVideo/Carousel"), {
