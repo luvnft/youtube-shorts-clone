@@ -4,6 +4,7 @@
   padding-block-end: 0.5rem;
   background-color: #fff;
   box-sizing: border-box;
+  /* max-inline-size: 1; */
 }
 
 .section {
