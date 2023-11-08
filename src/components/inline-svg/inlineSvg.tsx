@@ -24,8 +24,9 @@ const InlineSvg = memo(
         {...divProps}
         style={{
           color: "currentColor",
-          display: "flex",
+          display: "inline-flex",
           alignItems: "center",
+          justifyItems: "center",
           ...style,
         }}
         dangerouslySetInnerHTML={{ __html: svg }}
